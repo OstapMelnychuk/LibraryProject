@@ -1,10 +1,11 @@
-package Connector;
+package connector;
 
 import java.sql.*;
-public class Connector{
-  private static final String URL= "jdbc:mysql://127.0.0.1:3306/library?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC";
+
+public class Connector {
+  private static final String URL = "jdbc:mysql://127.0.0.1:3306/library?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC";
   private static final String DB_USERNAME = "root";
-  private static final String DB_PASSWORD = "Spaceman3228";
+  private static final String DB_PASSWORD = "root";
   private static Connection conn;
 
   public static void main(String[] args) {
@@ -32,12 +33,12 @@ public class Connector{
     return conn;
   }
 
-  public String firstStatement(){
+  public String firstStatement() {
     StringBuilder stringBuilder = new StringBuilder();
     try {
       Statement statement = conn.createStatement();
       ResultSet resultSet = statement.executeQuery("SELECT * FROM JOURNAL");
-      while (resultSet.next()){
+      while (resultSet.next()) {
         stringBuilder.append(resultSet.getInt(1)).append(" ").append(resultSet.getString(2)).append(" ").append(resultSet.getString(3)).append(" ").append(resultSet.getString(4));
         stringBuilder.append("\n");
       }

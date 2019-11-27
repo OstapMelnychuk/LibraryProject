@@ -1,10 +1,14 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Author {
   private Integer id;
   private String firstname;
   private String secondname;
   private String surname;
+  private List<Book> books = new ArrayList<Book>();
 
   public Author() {
   }
@@ -46,6 +50,14 @@ public class Author {
 
   public void setSurname(String surname) {
     this.surname = surname;
+  }
+
+  public List<Book> getBooks() {
+    return books;
+  }
+
+  public void addBook(Book book) {
+    books.add(book);
   }
 
 

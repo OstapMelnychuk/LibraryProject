@@ -11,6 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
+  <a href="${pageContext.request.contextPath}/web/users.jsp">Users</a>
   $END$
   </body>
 </html>
