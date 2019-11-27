@@ -1,6 +1,7 @@
 package models;
 
 public class Book {
+  private Integer id;
   private String title;
   private String description;
   private String dateOfPublishment;
@@ -8,10 +9,16 @@ public class Book {
   public Book() {
   }
 
-  public Book(String title, String description, String dateOfPublishment) {
+
+  public Book(Integer id, String title, String description, String dateOfPublishment) {
+    this.id = id;
     this.title = title;
     this.description = description;
     this.dateOfPublishment = dateOfPublishment;
+  }
+
+  public Integer getId() {
+    return id;
   }
 
   public String getTitle() {
@@ -45,6 +52,7 @@ public class Book {
 
     Book book = (Book) o;
 
+    if (!id.equals(book.id)) return false;
     if (!title.equals(book.title)) return false;
     if (!description.equals(book.description)) return false;
     return dateOfPublishment.equals(book.dateOfPublishment);
@@ -52,7 +60,8 @@ public class Book {
 
   @Override
   public int hashCode() {
-    int result = title.hashCode();
+    int result = id.hashCode();
+    result = 31 * result + title.hashCode();
     result = 31 * result + description.hashCode();
     result = 31 * result + dateOfPublishment.hashCode();
     return result;
@@ -61,7 +70,8 @@ public class Book {
   @Override
   public String toString() {
     return "Book{" +
-            "title='" + title + '\'' +
+            "id=" + id +
+            ", title='" + title + '\'' +
             ", description='" + description + '\'' +
             ", dateOfPublishment='" + dateOfPublishment + '\'' +
             '}';
