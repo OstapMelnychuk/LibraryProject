@@ -16,35 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `book`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `book`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
+CREATE TABLE `book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nick_name` varchar(30) DEFAULT NULL,
-  `login` varchar(30) DEFAULT NULL,
-  `user_password` varchar(30) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
-  `email` varchar(40) DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tb_users` (`role_id`),
-  CONSTRAINT `tb_users` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `title` varchar(30) DEFAULT NULL,
+  `book_description` varchar(200) DEFAULT NULL,
+  `date_of_publisment` date DEFAULT NULL,
+  `count` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `book`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Admin','admin','admin',1,'admin@gmail.com',18,'2019-11-02');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `book` WRITE;
+/*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` VALUES (1,'Sunset','The book about Sunset','1999-11-22',NULL);
+/*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-27 17:19:09
+-- Dump completed on 2019-11-29 21:02:27

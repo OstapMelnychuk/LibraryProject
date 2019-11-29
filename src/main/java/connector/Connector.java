@@ -28,7 +28,7 @@ public class Connector{
     }
   }
 
-  public static Connection getConn() {
+  public static Connection getConnection() {
     return connection;
   }
 
