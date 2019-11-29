@@ -1,10 +1,14 @@
 package connector;
 
 import dao.AuthorDaoImpl;
+import dao.BookDaoImpl;
 import dao.interfaces.AuthorDao;
 
+import dao.interfaces.BookDao;
 import models.Book;
+
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Connector {
@@ -17,12 +21,31 @@ public class Connector {
     Connector connector = new Connector();
     Connector.connectToDB();
     AuthorDao author = new AuthorDaoImpl(connection);
-    List<Book> list = author.findAllBooksByMainAuthor("Anton");
+    BookDao book = new BookDaoImpl(connection);
 
-    System.out.println(author.getAvarageOfUserByAuthor("Anton"));
+    List<Book> list = book.findAllBooksByAuthor("Anton");
+
+    System.out.println(author.getAvarageAgeOfUserByAuthor("Anton"));
     System.out.println(list.get(0));
 
     System.out.println(connector.firstStatement());
+
+    System.out.println(book.isBookAvailable("Its"));
+
+    System.out.println(book.getAvarageAgeOfUserByBook("It"));
+
+    List<Book> list1 = book.findAllBooksBetweenDate(
+            LocalDate.of(1950, 12, 31), LocalDate.of(2015, 12, 31));
+
+
+    System.out.println(author.getAvarageAgeOfUserByAuthor("Anton"));
+    System.out.println(list.get(0));
+
+    for (int i = 0; i < list1.size(); i++) {
+      list1.get(i);
+      System.
+              out.println(list1.get(i));
+    }
   }
 
   public static void connectToDB() {
@@ -44,12 +67,12 @@ public class Connector {
     return connection;
   }
 
-  public String firstStatement(){
+  public String firstStatement() {
     StringBuilder stringBuilder = new StringBuilder();
     try {
       Statement statement = connection.createStatement();
       ResultSet resultSet = statement.executeQuery("SELECT * FROM JOURNAL");
-      while (resultSet.next()){
+      while (resultSet.next()) {
         stringBuilder.append(resultSet.getInt(1)).append(" ")
                 .append(resultSet.getString(2)).append(" ")
                 .append(resultSet.getString(3)).append(" ")
