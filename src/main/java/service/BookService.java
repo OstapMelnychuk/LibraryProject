@@ -14,19 +14,19 @@ public class BookService {
     this.connection = connection;
   }
 
-  public boolean isBookAvailable(String nameOfBook){
+  public boolean isBookAvailable(String nameOfBook) {
     return new BookDaoImpl(connection).isBookAvailable(nameOfBook);
   }
 
-  double getAvarageAgeOfUserByBook(String nameOfAuthor){
+  double getAvarageAgeOfUserByBook(String nameOfAuthor) {
     return new BookDaoImpl(connection).getAvarageAgeOfUserByBook(nameOfAuthor);
   }
 
-  List<Book> findAllBooksBetweenDate(LocalDate fromDate, LocalDate toDate){
+  List<Book> findAllBooksBetweenDate(LocalDate fromDate, LocalDate toDate) {
     return new BookDaoImpl(connection).findAllBooksBetweenDate(fromDate, toDate);
   }
 
-  List<Book> findAllBooksByAuthor(String nameOfAuthor){
+  List<Book> findAllBooksByAuthor(String nameOfAuthor) {
     return new BookDaoImpl(connection).findAllBooksByAuthor(nameOfAuthor);
   }
 }
