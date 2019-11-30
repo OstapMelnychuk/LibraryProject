@@ -24,14 +24,13 @@ DROP TABLE IF EXISTS `journal`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `journal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `book_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `book_id` int(11) DEFAULT NULL,
   `date_of_output` date DEFAULT NULL,
   `date_of_input` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `tb_reader` (`user_id`),
-  KEY `tb_book_journal` (`book_id`),
-  CONSTRAINT `tb_book_journal` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tb_book_journal` FOREIGN KEY (`book_id`) REFERENCES `copy_book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tb_reader` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -42,7 +41,6 @@ CREATE TABLE `journal` (
 
 LOCK TABLES `journal` WRITE;
 /*!40000 ALTER TABLE `journal` DISABLE KEYS */;
-INSERT INTO `journal` VALUES (1,1,1,'2019-11-30','2019-11-05');
 /*!40000 ALTER TABLE `journal` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-27 17:19:10
+

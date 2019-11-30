@@ -34,7 +34,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `tb_users` (`role_id`),
   CONSTRAINT `tb_users` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,11 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+<<<<<<< HEAD:DB/Dump20191127 (1)/library_users.sql
 INSERT INTO `users` VALUES (1,'Admin','admin','admin',1,'admin@gmail.com',18,'2019-11-02');
+=======
+INSERT INTO `users` VALUES (1,'John Dalton',' login','password',2,'email',18,'1999-11-11'),(2,'John D','log','pass',2,'email',18,'1999-11-11'),(3,'John Dalton',' login','password',2,'email',18,'1999-11-11');
+>>>>>>> 8712643df1e12fd8ca467385b8e9cc92dd1b6cd2:DB/Dump20191129/library_users.sql
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +60,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD:DB/Dump20191127 (1)/library_users.sql
 -- Dump completed on 2019-11-27 17:19:09
+=======
+-- Dump completed on 2019-11-29 21:02:27
+>>>>>>> 8712643df1e12fd8ca467385b8e9cc92dd1b6cd2:DB/Dump20191129/library_users.sql

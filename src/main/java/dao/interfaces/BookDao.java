@@ -10,5 +10,5 @@ public interface BookDao {
   double getAvarageAgeOfUserByBook(String nameOfAuthor);
   List<Book> findAllBooksBetweenDate(LocalDate fromDate, LocalDate toDate);
   List<Book> findAllBooksByAuthor(String nameOfAuthor);
-
+  public void save(Book book);
 }

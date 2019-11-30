@@ -5,16 +5,26 @@ public class Book {
   private String title;
   private String description;
   private String dateOfPublishment;
+  private int count;
+  private Author author;
 
   public Book() {
   }
-
 
   public Book(Integer id, String title, String description, String dateOfPublishment) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.dateOfPublishment = dateOfPublishment;
+  }
+
+  public Book(Integer id, String title, String description, String dateOfPublishment, int count, Author author) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.dateOfPublishment = dateOfPublishment;
+    this.count = count;
+    this.author = author;
   }
 
 
@@ -48,6 +58,22 @@ public class Book {
 
   public void setDateOfPublishment(String dateOfPublishment) {
     this.dateOfPublishment = dateOfPublishment;
+  }
+
+  public int getCount() {
+    return count;
+  }
+
+  public void setCount(int count) {
+    this.count = count;
+  }
+
+  public Author getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(Author author) {
+    this.author = author;
   }
 
   @Override

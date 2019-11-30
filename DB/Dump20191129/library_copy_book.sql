@@ -16,27 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `roles`
+-- Table structure for table `copy_book`
 --
 
-DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `copy_book`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `roles` (
+CREATE TABLE `copy_book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `book_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tb_copy_book` (`book_id`),
+  CONSTRAINT `tb_copy_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `roles`
+-- Dumping data for table `copy_book`
 --
 
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'Admin'),(2,'User');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+LOCK TABLES `copy_book` WRITE;
+/*!40000 ALTER TABLE `copy_book` DISABLE KEYS */;
+/*!40000 ALTER TABLE `copy_book` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,8 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD:DB/Dump20191127 (1)/library_roles.sql
--- Dump completed on 2019-11-27 17:19:09
-=======
 -- Dump completed on 2019-11-29 21:02:27
->>>>>>> 8712643df1e12fd8ca467385b8e9cc92dd1b6cd2:DB/Dump20191129/library_roles.sql

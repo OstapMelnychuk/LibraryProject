@@ -27,6 +27,7 @@ CREATE TABLE `book` (
   `title` varchar(30) DEFAULT NULL,
   `book_description` varchar(200) DEFAULT NULL,
   `date_of_publisment` date DEFAULT NULL,
+  `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,7 +38,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Sunset','The book about Sunset','1999-11-22');
+INSERT INTO `book` VALUES (1,'Sunset','The book about Sunset','1999-11-22',NULL);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD:DB/Dump20191127 (1)/library_book.sql
 -- Dump completed on 2019-11-27 17:19:09
+=======
+-- Dump completed on 2019-11-29 21:02:27
+>>>>>>> 8712643df1e12fd8ca467385b8e9cc92dd1b6cd2:DB/Dump20191129/library_book.sql

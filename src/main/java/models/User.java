@@ -6,7 +6,33 @@ public class User {
   private String login;
   private String password;
   private Integer roleId;
+  private String email;
   private Integer age;
+  private String startDay;
+
+  public User(){
+
+  }
+
+  public User(Integer id, String nickName, String login, String password,
+              Integer roleId, String email, Integer age, String startDay) {
+    this.id = id;
+    this.nickName = nickName;
+    this.login = login;
+    this.password = password;
+    this.roleId = roleId;
+    this.age = age;
+    this.startDay = startDay;
+    this.email = email;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
   public Integer getAge() {
     return age;
@@ -24,21 +50,28 @@ public class User {
     this.startDay = startDay;
   }
 
-  private String startDay;
-
-  public User(){
-
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public User(Integer id, String nickName, String login, String password,
-              Integer roleId, String email, Integer age, String startDay) {
-    this.id = id;
+  public String getNickName() {
+    return nickName;
+  }
+
+  public void setNickName(String nickName) {
     this.nickName = nickName;
-    this.login = login;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
     this.password = password;
+  }
+
+  public void setRoleId(Integer roleId) {
     this.roleId = roleId;
-    this.age = age;
-    this.startDay = startDay;
   }
 
   public int getId() {
@@ -121,13 +154,13 @@ public class User {
   @Override
   public String toString() {
     return "User{" +
-      "id=" + id +
-      ", nickName='" + nickName + '\'' +
-      ", login='" + login + '\'' +
-      ", password='" + password + '\'' +
-      ", roleId=" + roleId +
-      ", age=" + age +
-      ", startDay='" + startDay + '\'' +
-      '}';
+            "id=" + id +
+            ", nickName='" + nickName + '\'' +
+            ", login='" + login + '\'' +
+            ", password='" + password + '\'' +
+            ", roleId=" + roleId +
+            ", age=" + age +
+            ", startDay='" + startDay + '\'' +
+            '}';
   }
 }

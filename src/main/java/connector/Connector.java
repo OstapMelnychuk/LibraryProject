@@ -3,8 +3,8 @@ package connector;
 import dao.AuthorDaoImpl;
 import dao.BookDaoImpl;
 import dao.interfaces.AuthorDao;
-
 import dao.interfaces.BookDao;
+import models.Author;
 import models.Book;
 
 import java.sql.*;
@@ -20,31 +20,28 @@ public class Connector {
   public static void main(String[] args) {
     Connector connector = new Connector();
     Connector.connectToDB();
+    System.out.println(connector.firstStatement());
     AuthorDao author = new AuthorDaoImpl(connection);
-    BookDao book = new BookDaoImpl(connection);
+    BookDaoImpl book = new BookDaoImpl(connection);
+
 
     List<Book> list = book.findAllBooksByAuthor("Anton");
 
     System.out.println(author.getAvarageAgeOfUserByAuthor("Anton"));
     System.out.println(list.get(0));
 
-    System.out.println(connector.firstStatement());
+    System.out.println(book.isBookAvailable("It"));
 
-    System.out.println(book.isBookAvailable("Its"));
-
-    System.out.println(book.getAvarageAgeOfUserByBook("It"));
+    System.out.println(book.getAvarageAgeOfUserByBook("Sunset"));
 
     List<Book> list1 = book.findAllBooksBetweenDate(
             LocalDate.of(1950, 12, 31), LocalDate.of(2015, 12, 31));
 
-
-    System.out.println(author.getAvarageAgeOfUserByAuthor("Anton"));
-    System.out.println(list.get(0));
+    book.save(new Book(4, "Shine", "Overlook","ded", 34, new Author(5, "","","")));
 
     for (int i = 0; i < list1.size(); i++) {
       list1.get(i);
-      System.
-              out.println(list1.get(i));
+      System.out.println(list1.get(i));
     }
   }
 
@@ -63,7 +60,7 @@ public class Connector {
     }
   }
 
-  public static Connection getConn() {
+  public static Connection getConnection() {
     return connection;
   }
 

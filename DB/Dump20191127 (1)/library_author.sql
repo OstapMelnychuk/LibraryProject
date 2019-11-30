@@ -50,4 +50,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD:DB/Dump20191127 (1)/library_author.sql
 -- Dump completed on 2019-11-27 17:19:10
+=======
+-- Dump completed on 2019-11-29 21:02:28
+>>>>>>> 8712643df1e12fd8ca467385b8e9cc92dd1b6cd2:DB/Dump20191129/library_author.sql
