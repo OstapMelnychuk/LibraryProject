@@ -8,10 +8,10 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public class UserDAO implements UserDAOInterface {
+public class UserDao implements UserDAOInterface {
   private Connection connection;
 
-  UserDAO(Connection connection) {
+  UserDao(Connection connection) {
     this.connection = connection;
   }
 
@@ -19,7 +19,7 @@ public class UserDAO implements UserDAOInterface {
     Connector.connectToDB();
     User user = new User(3, "User", "user",
       "123", 2, "@", 12, "1271-11-11");
-    UserDAO userDAO = new UserDAO(Connector.getConnection());
+    UserDao userDAO = new UserDao(Connector.getConnection());
     try {
       System.out.println(userDAO.readUserById(userDAO.createUser(user)).get());
       userDAO.updateUserById(3 , userDAO.readUserByLogin("login").get());
@@ -105,6 +105,5 @@ public class UserDAO implements UserDAOInterface {
     preparedStatement.setInt(6, user.getAge());
     preparedStatement.setDate(7, Date.valueOf(user.getStartDay()));
     preparedStatement.executeUpdate();
-
   }
 }

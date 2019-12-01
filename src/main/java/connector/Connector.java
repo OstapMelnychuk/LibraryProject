@@ -84,4 +84,12 @@ public class Connector {
     }
     return null;
   }
+
+  public void closeConnection(){
+    try {
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }
