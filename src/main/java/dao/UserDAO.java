@@ -1,4 +1,4 @@
-package dao.impl;
+package dao;
 
 import connector.Connector;
 import dao.interfaces.UserDAOInterface;

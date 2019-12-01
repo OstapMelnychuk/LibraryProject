@@ -25,6 +25,7 @@ public class Connector {
     BookDaoImpl book = new BookDaoImpl(connection);
 
 
+   book.getTenTheMostPopularBook();
     List<Book> list = book.findAllBooksByAuthor("Anton");
 
     System.out.println(author.getAvarageAgeOfUserByAuthor("Anton"));
@@ -37,7 +38,8 @@ public class Connector {
     List<Book> list1 = book.findAllBooksBetweenDate(
             LocalDate.of(1950, 12, 31), LocalDate.of(2015, 12, 31));
 
-    book.save(new Book(4, "Shine", "Overlook","ded", 34, new Author(5, "","","")));
+//    book.save(new Book(4, "Karin", "car","ded",
+//            34, new Author(2, "Vasia","Malion","Pupkin")));
 
     for (int i = 0; i < list1.size(); i++) {
       list1.get(i);

@@ -89,24 +89,91 @@ public class BookDaoImpl implements BookDao {
     }
   }
 
+  public void getTenTheMostPopularBook(){
+    String query = "SELECT count(title), book.title FROM book join copy_book on book.id = copy_book.book_id\n" +
+            "join journal on journal.book_id = copy_book.book_id group by copy_book.book_id order by count(title) desc;";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+
+      while (resultSet.next()) {
+        Integer id = resultSet.getInt(1);
+        String title = resultSet.getString(2);
+
+        System.out.println(id + " " + title);
+      }
+
+
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void getTenTheMostUnopularBook(){
+    String query = "SELECT count(title), book.title FROM book join copy_book on book.id = copy_book.book_id\n" +
+            "join journal on journal.book_id = copy_book.book_id group by copy_book.book_id order by count(title) asc ;";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+
+      while (resultSet.next()) {
+        Integer id = resultSet.getInt(1);
+        String title = resultSet.getString(2);
+
+        System.out.println(id + " " + title);
+      }
+
+
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+
   @Override
   public void save(Book book) {
     String query = "INSERT INTO book "
             + "(title, book_description, date_of_publisment, count)"
             + "VALUE (?,?,?,?)";
+
     try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
       preparedStatement.setString(1, book.getTitle());
       preparedStatement.setString(2, book.getDescription());
       preparedStatement.setDate(3, Date.valueOf(LocalDate.of(2015, 12, 31)));
       preparedStatement.setInt(4, book.getCount());
       preparedStatement.executeUpdate();
+
+
+
       try (ResultSet keys = preparedStatement.getGeneratedKeys()) {
         if (keys.next()) {
           book.setId(keys.getInt(1));
         }
+        connectBookWithAuthor(book);
       }
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
+
+
+  private void connectBookWithAuthor(Book book){
+    String queryAddAuthor = "INSERT INTO copy (author_id, book_id) VALUES(?,?)";
+
+
+    try (PreparedStatement statement = connection.prepareStatement(queryAddAuthor, Statement.RETURN_GENERATED_KEYS);){
+
+      System.out.println(book.getAuthor().getId() + " " + book.getId());
+
+      statement.setInt(1, book.getAuthor().getId());
+      statement.setInt(2, book.getId());
+
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

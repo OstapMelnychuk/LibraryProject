@@ -1,17 +1,13 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: misha
-  Date: 26.11.2019
-  Time: 16:00
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  <a href="${pageContext.request.contextPath}/web/users.jsp">Users</a>
-  $END$
-  </body>
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+</head>
+<body>
+<div id="main_div">
+  <jsp:include page="navbar.jsp" />
+
+  <img width="100%"
+       src="https://files.northernbeaches.nsw.gov.au/sites/default/files/styles/gi--main-thumbnail/public/images/general-information/glen-street/gls-webtile.jpg?itok=wSTLUmND">
+</div>
+</body>
 </html>
