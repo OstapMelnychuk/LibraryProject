@@ -16,7 +16,7 @@ public final class DaoFactory {
   private static final String URL = "jdbc:mysql://localhost:3306/library?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC";
 
   public static void main(String[] args) {
-   // System.out.println(bookDao().isBookAvailable("It"));
+    System.out.println(bookDao().isBookAvailable("It"));
   }
 
   /**
