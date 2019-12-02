@@ -1,4 +1,6 @@
-package servlets;
+package servlets.books;
+
+import service.BookService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

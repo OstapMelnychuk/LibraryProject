@@ -162,7 +162,6 @@ public class BookDaoImpl implements BookDao {
   private void connectBookWithAuthor(Book book){
     String queryAddAuthor = "INSERT INTO copy (author_id, book_id) VALUES(?,?)";
 
-
     try (PreparedStatement statement = connection.prepareStatement(queryAddAuthor, Statement.RETURN_GENERATED_KEYS);){
 
       System.out.println(book.getAuthor().getId() + " " + book.getId());

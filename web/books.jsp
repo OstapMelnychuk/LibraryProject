@@ -26,8 +26,8 @@
                 </form>
             </div>
             <div class="search-container">
-                <form name="" action="/" method="">
-                    <input class="tftextinput" type="text" placeholder="Search by book title" name="search_book_author"
+                <form name="search-books" action="/search-books" method="post">
+                    <input class="tftextinput" type="text" placeholder="Search by book title" name="title"
                            value="">
                     <button type="submit" class="tfbutton">Search</button>
                 </form>
@@ -61,6 +61,7 @@
                     </th>
                     <th>
                         Book Title
+                        ${isAvailable}
                     </th>
                     <th>
                         Edition Date
@@ -73,6 +74,10 @@
             </table>
         </div>
     </div>
+</div>
+<div>
+    <p>Result:</p>
+    ${isAvailable}
 </div>
 </body>
 </html>

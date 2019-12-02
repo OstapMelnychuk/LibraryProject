@@ -1,6 +1,5 @@
 package dao;
 
-import connector.Connector;
 import dao.interfaces.UserDAOInterface;
 import models.User;
 
@@ -11,23 +10,10 @@ import java.util.Optional;
 public class UserDao implements UserDAOInterface {
   private Connection connection;
 
-  UserDao(Connection connection) {
+  public UserDao(Connection connection) {
     this.connection = connection;
   }
 
-  public static void main(String[] args) {
-    Connector.connectToDB();
-    User user = new User(3, "User", "user",
-      "123", 2, "@", 12, "1271-11-11");
-    UserDao userDAO = new UserDao(Connector.getConnection());
-    try {
-      System.out.println(userDAO.readUserById(userDAO.createUser(user)).get());
-      userDAO.updateUserById(3 , userDAO.readUserByLogin("login").get());
-      System.out.println(userDAO.readUserById(3));
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
 
   @Override
   public Optional<User> readUserById(Integer id) throws SQLException {

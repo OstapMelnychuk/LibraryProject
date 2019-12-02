@@ -4,7 +4,6 @@ import dao.interfaces.AuthorDao;
 import models.Author;
 
 import java.sql.*;
-import java.time.LocalDate;
 
 public class AuthorDaoImpl implements AuthorDao {
   private final Connection connection;
