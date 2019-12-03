@@ -1,7 +1,5 @@
 package servlets.books;
 
-import service.BookService;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +10,10 @@ import java.io.IOException;
 
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {
+
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
     RequestDispatcher requestDispatcher = req.getRequestDispatcher("books.jsp");
     requestDispatcher.forward(req, resp);
   }

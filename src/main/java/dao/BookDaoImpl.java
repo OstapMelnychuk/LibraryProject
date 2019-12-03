@@ -2,10 +2,12 @@ package dao;
 
 import dao.interfaces.BookDao;
 import dao.interfaces.mappers.BookMapper;
+import dto.BookDto;
 import models.Book;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,57 @@ public class BookDaoImpl implements BookDao {
 
   public BookDaoImpl(Connection connection) {
     this.connection = connection;
+  }
+
+  @Override
+  public List<BookDto> findAll() {
+    String query = "SELECT title, book_description, date_of_publisment FROM book";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      List<BookDto> books = new ArrayList<>();
+
+      while (resultSet.next()) {
+        String title = resultSet.getString(1);
+        String bookDescription = resultSet.getString(2);
+        String dateOfPublishment = resultSet.getString(3);
+
+        BookDto book = new BookDto(title, bookDescription, dateOfPublishment);
+
+        books.add(book);
+      }
+
+      return books;
+    } catch (SQLException e) {
+      return null;
+    }
+  }
+
+  @Override
+  public List<BookDto> findAllBookByTitle(String title) {
+    String query = "SELECT book_description, date_of_publisment FROM book Where title = ?;";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+      preparedStatement.setString(1, title);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      List<BookDto> books = new ArrayList<>();
+
+      while (resultSet.next()) {
+        String bookDescription = resultSet.getString(1);
+        String dateOfPublishment = resultSet.getString(2);
+
+        BookDto book = new BookDto(title, bookDescription, dateOfPublishment);
+
+        books.add(book);
+      }
+
+      return books;
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   @Override
@@ -54,11 +107,11 @@ public class BookDaoImpl implements BookDao {
   }
 
   @Override
-  public List<Book> findAllBooksByAuthor(String nameOfAuthor) {
-    String query = "SELECT * FROM book " +
+  public List<BookDto> findAllBooksByAuthor(String nameOfAuthor) {
+    String query = "SELECT title, book_description, date_of_publisment FROM book " +
             "JOIN copy ON book.id = copy.book_id " +
             "JOIN author on library.copy.author_id = author.id " +
-            "where author.author_name = ? ";
+            "where author.author_name = ? GROUP BY book.title";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
       preparedStatement.setString(1, nameOfAuthor);
       ResultSet resultSet = preparedStatement.executeQuery();
@@ -73,12 +126,11 @@ public class BookDaoImpl implements BookDao {
 
 
   @Override
-  public List<Book> findAllBooksBetweenDate(LocalDate fromDate, LocalDate toDate) {
-    String query = "SELECT * FROM book WHERE date_of_publisment BETWEEN ? AND ?";
+  public List<BookDto> findAllBooksBetweenDate(int firstYear, int secondYear) {
+    String query = "SELECT title, book_description, date_of_publisment FROM book WHERE YEAR(date_of_publisment) BETWEEN ? AND ?";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setDate(1, Optional.ofNullable((Date.valueOf(fromDate))).orElse(null));
-      preparedStatement.setDate(2, Optional.ofNullable((Date.valueOf(toDate))).orElse(null));
-
+      preparedStatement.setInt(1, firstYear);
+      preparedStatement.setInt(2, secondYear);
       ResultSet resultSet = preparedStatement.executeQuery();
 
       BookMapper bookMapper = new BookMapper();
@@ -89,48 +141,41 @@ public class BookDaoImpl implements BookDao {
     }
   }
 
-  public void getTenTheMostPopularBook(){
-    String query = "SELECT count(title), book.title FROM book join copy_book on book.id = copy_book.book_id\n" +
-            "join journal on journal.book_id = copy_book.book_id group by copy_book.book_id order by count(title) desc;";
+  @Override
+  public List<BookDto> getTenTheMostPopularBook() {
+    return getBookRating("desc");
+  }
+
+  @Override
+  public List<BookDto> getTenTheMostUnPopularBook() {
+    return getBookRating("asc");
+  }
+
+  private List<BookDto> getBookRating(String orderBy) {
+    String query = "SELECT count(title), book.title, book.book_description, book.date_of_publisment FROM book " +
+            "join copy_book on book.id = copy_book.book_id\n" +
+            "join journal on journal.book_id = copy_book.book_id " +
+            "group by copy_book.book_id order by count(title) " + orderBy + ";";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
       ResultSet resultSet = preparedStatement.executeQuery();
 
+      List<BookDto> books = new ArrayList<BookDto>();
 
       while (resultSet.next()) {
-        Integer id = resultSet.getInt(1);
         String title = resultSet.getString(2);
+        String description = resultSet.getString(3);
+        String date = resultSet.getString(4);
 
-        System.out.println(id + " " + title);
+        books.add(new BookDto(title, description, date));
       }
 
+      return books;
 
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
-
-  public void getTenTheMostUnopularBook(){
-    String query = "SELECT count(title), book.title FROM book join copy_book on book.id = copy_book.book_id\n" +
-            "join journal on journal.book_id = copy_book.book_id group by copy_book.book_id order by count(title) asc ;";
-
-    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      ResultSet resultSet = preparedStatement.executeQuery();
-
-
-      while (resultSet.next()) {
-        Integer id = resultSet.getInt(1);
-        String title = resultSet.getString(2);
-
-        System.out.println(id + " " + title);
-      }
-
-
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
 
   @Override
   public void save(Book book) {
@@ -146,7 +191,6 @@ public class BookDaoImpl implements BookDao {
       preparedStatement.executeUpdate();
 
 
-
       try (ResultSet keys = preparedStatement.getGeneratedKeys()) {
         if (keys.next()) {
           book.setId(keys.getInt(1));
@@ -159,10 +203,10 @@ public class BookDaoImpl implements BookDao {
   }
 
 
-  private void connectBookWithAuthor(Book book){
+  private void connectBookWithAuthor(Book book) {
     String queryAddAuthor = "INSERT INTO copy (author_id, book_id) VALUES(?,?)";
 
-    try (PreparedStatement statement = connection.prepareStatement(queryAddAuthor, Statement.RETURN_GENERATED_KEYS);){
+    try (PreparedStatement statement = connection.prepareStatement(queryAddAuthor, Statement.RETURN_GENERATED_KEYS);) {
 
       System.out.println(book.getAuthor().getId() + " " + book.getId());
 

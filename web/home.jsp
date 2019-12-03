@@ -1,14 +1,34 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
-    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <title>Library</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="resources/css/collapse.css" type="text/css" rel="stylesheet">
+    <link href="resources/css/home.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
-<div id="main_div">
-    <jsp:include page="navbar.jsp" />
 
-    <img width="100%"
-         src="https://files.northernbeaches.nsw.gov.au/sites/default/files/styles/gi--main-thumbnail/public/images/general-information/glen-street/gls-webtile.jpg?itok=wSTLUmND">
+<jsp:include page="navbar.jsp" />
+
+
+
+<div class="row1" >
+    <c:forEach items="${books}" var="element">
+        <div class="column">
+            <div class="card">
+                   <h5> ${element.title}</h5>
+                <div>${element.description}</div>
+                <div class="badge badge-primary badge-pill">
+                        ${element.dateOfPublishment}
+                </div>
+            </div>
+        </div>
+    </c:forEach>
 </div>
+
 </body>
 </html>
+

@@ -3,20 +3,23 @@ package connector;
 import dao.AuthorDaoImpl;
 import dao.BookDaoImpl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public final class DaoFactory {
 
   private static Connection connection;
   private static final String USER = "root";
   private static final String PASSWORD = "root";
-  private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-  private static final String URL = "jdbc:mysql://localhost:3306/library?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC";
+  private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+  private static final String URL = "jdbc:mysql://localhost:3306/"
+          + "library?"
+          + "useSSL=false&"
+          + "serverTimezone=UTC&"
+          + "allowPublicKeyRetrieval=true";
 
-  public static void main(String[] args) {
-   // System.out.println(bookDao().isBookAvailable("It"));
+  public static void main(String[] args)
+  {
+    //bookDao().getTenTheMostPopularBook("asc");
   }
 
   /**
@@ -25,13 +28,40 @@ public final class DaoFactory {
   private DaoFactory() {
   }
 
+
   static {
     try {
-      Class.forName(DB_DRIVER);
-      connection = DriverManager.getConnection(URL, USER, PASSWORD);
-    } catch (SQLException | ClassNotFoundException e) {
-      throw new RuntimeException(e);
+      Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+    } catch (Exception e) {
+      System.out.println("JAVA: Class.forName() error");
+      e.printStackTrace();
     }
+    try {
+      connection = DriverManager.getConnection(URL, USER, PASSWORD);
+    } catch (SQLException e) {
+      System.out.println("Error in initializing a connection to MYSQL DB");
+      e.printStackTrace();
+    }
+  }
+
+
+  public static String firstStatement(){
+    StringBuilder stringBuilder = new StringBuilder();
+    try {
+      Statement statement = connection.createStatement();
+      ResultSet resultSet = statement.executeQuery("SELECT * FROM JOURNAL");
+      while (resultSet.next()){
+        stringBuilder.append(resultSet.getInt(1)).append(" ")
+                .append(resultSet.getString(2)).append(" ")
+                .append(resultSet.getString(3)).append(" ")
+                .append(resultSet.getString(4));
+        stringBuilder.append("\n");
+      }
+      return stringBuilder.toString();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   /**
