@@ -1,0 +1,46 @@
+.left-collapse {
+    padding-left: 50px;
+    width: 25%;
+}
+
+.text-right {
+    margin-left: 736px;
+}
+
+.first-year {
+    padding: 1%;
+}
+
+.year-button {
+    margin-left: 3px;
+    margin-top: 4px;
+}
+
+.navbar-default .navbar-text {
+    color: #777;
+    margin-left: 733px;
+}
+
+.cartochka {
+    width: 10%;
+    height: 10%;
+}
+
+.form-add {
+    margin-left: 20px;
+    width: 20%;
+}
+
+.for {
+    width: 36%;
+    margin-left: 150px;
+}
+
+.relate {
+    display: flex;
+    flex-direction: row;
+}
+
+.li_button {
+    margin-bottom: 1%;
+}
