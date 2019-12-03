@@ -65,4 +65,8 @@ public final class DaoFactory {
     }
   }
 
+  public static Connection getConnection() {
+    return connection;
+  }
+
 }
