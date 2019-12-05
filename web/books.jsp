@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="resources/js/jQuery.js"></script>
+    <link href="resources/css/collapse.css" rel="script" type="text/css">
 </head>
 <body>
 <jsp:include page="navbar.jsp"/>
@@ -125,7 +126,13 @@
         <c:forEach items="${books}" var="element">
             <li class="list-group-item d-flex justify-content-between align-items-center li_button">
                     ${element.title}
-                <span class="badge badge-primary badge-pill">${element.dateOfPublishment}</span>
+                <span class="badge badge-primary badge-pill" <c:if test="${not element.isAvailable()}">style="background-color: #d31444"</c:if>
+                      <c:if test="${element.isAvailable()}">style="background-color: #4adf75"</c:if>>
+
+                    <c:if test="${element.isAvailable()}"> is available</c:if>
+
+                    <c:if test="${not element.isAvailable()}">is not available</c:if>
+                </span>
                 <div>
                         ${element.description}
                 </div>

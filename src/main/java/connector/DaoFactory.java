@@ -2,6 +2,7 @@ package connector;
 
 import dao.AuthorDaoImpl;
 import dao.BookDaoImpl;
+import dao.UserDao;
 
 import java.sql.*;
 
@@ -17,11 +18,9 @@ public final class DaoFactory {
           + "serverTimezone=UTC&"
           + "allowPublicKeyRetrieval=true";
 
-  public static void main(String[] args)
-  {
+  public static void main(String[] args) {
     //bookDao().getTenTheMostPopularBook("asc");
   }
-
   /**
    * Private constructor used for Singleton implementation
    */
@@ -82,6 +81,9 @@ public final class DaoFactory {
     return new AuthorDaoImpl(connection);
   }
 
+  public static UserDao userDao() {
+    return new UserDao(connection);
+  }
 
   /**
    * Method for closing connection.
@@ -93,6 +95,10 @@ public final class DaoFactory {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public static Connection getConnection() {
+    return connection;
   }
 
 }

@@ -18,7 +18,7 @@ public class HomeServlet extends HttpServlet {
 
     req.setAttribute("books", bookService.findAllBook());
 
-    //lightgreen   #eb6262
+    System.out.println(bookService.findAllBook().get(0).isAvailable());
 
     RequestDispatcher requestDispatcher = req.getRequestDispatcher("home.jsp");
 

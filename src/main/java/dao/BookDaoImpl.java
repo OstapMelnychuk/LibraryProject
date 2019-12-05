@@ -2,6 +2,8 @@ package dao;
 
 import dao.interfaces.BookDao;
 import dao.interfaces.mappers.BookMapper;
+import dao.interfaces.mappers.BookRatingMapper;
+import dto.AuthorDto;
 import dto.BookDto;
 import models.Book;
 
@@ -20,25 +22,17 @@ public class BookDaoImpl implements BookDao {
 
   @Override
   public List<BookDto> findAll() {
-    String query = "SELECT title, book_description, date_of_publisment FROM book";
+    String query = "SELECT title, book_description, date_of_publisment, author_name, author_secondname, author_surname, count  FROM book " +
+            "join copy on book.id = copy.book_id " +
+            "join author a on copy.author_id = a.id";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
       ResultSet resultSet = preparedStatement.executeQuery();
 
-      List<BookDto> books = new ArrayList<>();
+      BookMapper bookMapper = new BookMapper();
 
-      while (resultSet.next()) {
-        String title = resultSet.getString(1);
-        String bookDescription = resultSet.getString(2);
-        String dateOfPublishment = resultSet.getString(3);
-
-        BookDto book = new BookDto(title, bookDescription, dateOfPublishment);
-
-        books.add(book);
-      }
-
-      return books;
+      return bookMapper.rowMapper(resultSet);
     } catch (SQLException e) {
       return null;
     }
@@ -46,24 +40,20 @@ public class BookDaoImpl implements BookDao {
 
   @Override
   public List<BookDto> findAllBookByTitle(String title) {
-    String query = "SELECT book_description, date_of_publisment FROM book Where title = ?;";
+    String query = "SELECT title, book_description, date_of_publisment, author.author_name, " +
+            "author.author_secondname, author.author_surname" +
+            " FROM book " +
+            "join copy on copy.book_id = book.id" +
+            " join author on copy.author_id = author.id " +
+            "Where title = ?";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
       preparedStatement.setString(1, title);
       ResultSet resultSet = preparedStatement.executeQuery();
 
-      List<BookDto> books = new ArrayList<>();
+      BookMapper bookMapper = new BookMapper();
 
-      while (resultSet.next()) {
-        String bookDescription = resultSet.getString(1);
-        String dateOfPublishment = resultSet.getString(2);
-
-        BookDto book = new BookDto(title, bookDescription, dateOfPublishment);
-
-        books.add(book);
-      }
-
-      return books;
+      return bookMapper.rowMapper(resultSet);
     } catch (SQLException e) {
       return null;
     }
@@ -108,7 +98,8 @@ public class BookDaoImpl implements BookDao {
 
   @Override
   public List<BookDto> findAllBooksByAuthor(String nameOfAuthor) {
-    String query = "SELECT title, book_description, date_of_publisment FROM book " +
+    String query = "SELECT title, book_description, date_of_publisment," +
+            "author.author_name, author.author_secondname, author.author_surname, book.count FROM book " +
             "JOIN copy ON book.id = copy.book_id " +
             "JOIN author on library.copy.author_id = author.id " +
             "where author.author_name like ? GROUP BY book.title";
@@ -127,10 +118,14 @@ public class BookDaoImpl implements BookDao {
 
   @Override
   public List<BookDto> findAllBooksBetweenDate(int firstYear, int secondYear) {
-    String query = "SELECT title, book_description, date_of_publisment FROM book WHERE YEAR(date_of_publisment) BETWEEN ? AND ?";
+    String query = "SELECT title, book_description, date_of_publisment, author_name, author_secondname, author_surname, count FROM book " +
+            "join copy on copy.book_id = book.id " +
+            "join author on copy.author_id = author.id " +
+            "WHERE YEAR(date_of_publisment) BETWEEN ? AND ?";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
       preparedStatement.setInt(1, firstYear);
       preparedStatement.setInt(2, secondYear);
+
       ResultSet resultSet = preparedStatement.executeQuery();
 
       BookMapper bookMapper = new BookMapper();
@@ -143,35 +138,29 @@ public class BookDaoImpl implements BookDao {
 
   @Override
   public List<BookDto> getTenTheMostPopularBook() {
-    return getBookRating("desc");
+    return getBookRating("asc");
   }
 
   @Override
   public List<BookDto> getTenTheMostUnPopularBook() {
-    return getBookRating("asc");
+    return getBookRating("desc");
   }
 
   private List<BookDto> getBookRating(String orderBy) {
-    String query = "SELECT count(copy_book.book_id), book.title, book.book_description, book.date_of_publisment FROM book" +
-            " left join copy_book on book.id = copy_book.book_id " +
-            "left join journal on journal.book_id = copy_book.book_id " +
-            "group by book.id order by count(copy_book.book_id)" + orderBy + ";";
+    String query = "SELECT count(journal.book_id), book.title, book.book_description, book.date_of_publisment," +
+            "author.author_name, author.author_secondname, author.author_surname FROM book" +
+            " left join copy_book on book.id = copy_book.id " +
+            "left join journal on journal.book_id = copy_book.id " +
+            "join copy on copy.book_id = book.id " +
+            "join author on copy.author_id = author.id " +
+            "group by book.id order by count(journal.book_id)" + orderBy;
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
       ResultSet resultSet = preparedStatement.executeQuery();
 
-      List<BookDto> books = new ArrayList<BookDto>();
+      BookRatingMapper bookRatingMapper = new BookRatingMapper();
 
-      while (resultSet.next()) {
-        String title = resultSet.getString(2);
-        String description = resultSet.getString(3);
-        String date = resultSet.getString(4);
-
-        books.add(new BookDto(title, description, date));
-      }
-
-      return books;
-
+      return bookRatingMapper.rowMapper(resultSet);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
