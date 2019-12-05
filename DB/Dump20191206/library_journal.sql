@@ -16,35 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `journal`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `journal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
+CREATE TABLE `journal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nick_name` varchar(30) DEFAULT NULL,
-  `login` varchar(30) DEFAULT NULL,
-  `user_password` varchar(30) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
-  `email` varchar(40) DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `date_of_output` date DEFAULT NULL,
+  `date_of_input` date DEFAULT NULL,
+  `book_exemplar_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `tb_users` (`role_id`),
-  CONSTRAINT `tb_users` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `tb_user` (`user_id`),
+  KEY `book_exemplar_id_idx` (`book_exemplar_id`),
+  CONSTRAINT `book_exemplar_id` FOREIGN KEY (`book_exemplar_id`) REFERENCES `copy_book` (`id`),
+  CONSTRAINT `tb_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `journal`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'John Dalton',' login','password',2,'email',18,'1999-11-11'),(2,'John D','log','pass',2,'email',18,'1999-11-11'),(3,'John Dalton',' login','password',2,'email',18,'1999-11-11'),(4,'John','log1','pass',1,'Email',28,'2019-12-02');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `journal` WRITE;
+/*!40000 ALTER TABLE `journal` DISABLE KEYS */;
+INSERT INTO `journal` VALUES (1,1,'1999-10-10','1999-11-11',NULL),(2,1,'1999-10-10',NULL,NULL);
+/*!40000 ALTER TABLE `journal` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-04 19:24:23
+-- Dump completed on 2019-12-06  0:04:11

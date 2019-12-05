@@ -16,30 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `copy_book`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `copy_book`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `copy_book` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `book_id` int(11) DEFAULT NULL,
-  `is_availible` tinyint(4) DEFAULT NULL,
+  `nick_name` varchar(30) DEFAULT NULL,
+  `login` varchar(30) DEFAULT NULL,
+  `user_password` varchar(30) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `email` varchar(40) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `tb_copy_book` (`book_id`),
-  CONSTRAINT `tb_copy_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `tb_users` (`role_id`),
+  CONSTRAINT `tb_users` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `copy_book`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `copy_book` WRITE;
-/*!40000 ALTER TABLE `copy_book` DISABLE KEYS */;
-INSERT INTO `copy_book` VALUES (1,1,NULL);
-/*!40000 ALTER TABLE `copy_book` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'John Dalton',' login','password',2,'email',18,'1999-11-11'),(2,'John D','log','pass',2,'email',18,'1999-11-11'),(3,'John Dalton',' login','password',2,'email',18,'1999-11-11'),(4,'John','log1','pass',1,'Email',28,'2019-12-02');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-04 19:24:23
+-- Dump completed on 2019-12-06  0:04:11

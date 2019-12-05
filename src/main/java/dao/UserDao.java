@@ -24,10 +24,8 @@ public class UserDao implements UserDaoInterface {
 
   public static void main(String[] args) {
     UserDao userDao = new UserDao(DaoFactory.getConnection());
-    User user = new User(4,"John", "log1", "pass",
-      1, "Email", 28, "1999-11-11");
     try {
-      System.out.println(userDao.createUser(user));
+      System.out.println(userDao.logIn("log1", "pass"));
     } catch (SQLException e) {
       e.printStackTrace();
     }
