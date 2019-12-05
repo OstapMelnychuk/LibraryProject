@@ -1,9 +1,12 @@
 package dto;
 
+import models.Author;
+
 public class BookDto {
   private String title;
   private String description;
   private String dateOfPublishment;
+  private Author author;
 
   public BookDto() {
   }

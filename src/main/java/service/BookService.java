@@ -6,6 +6,7 @@ import dto.BookDto;
 import models.Book;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,11 @@ public class BookService {
   }
 
   public List<BookDto> findAllBooksBetweenDate(int firstYear, int lastYear) {
-    return DaoFactory.bookDao().findAllBooksBetweenDate(firstYear, lastYear);
+    if(lastYear >= firstYear){
+      return DaoFactory.bookDao().findAllBooksBetweenDate(firstYear, lastYear);
+    }else {
+      return new ArrayList<>();
+    }
   }
 
   public List<BookDto> findAllBooksByAuthor(String nameOfAuthor) {

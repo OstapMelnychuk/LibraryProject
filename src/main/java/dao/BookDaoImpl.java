@@ -91,10 +91,10 @@ public class BookDaoImpl implements BookDao {
             "join copy_book on journal.book_id = copy_book.id " +
             "join copy on copy_book.book_id = copy.book_id " +
             "join book on book.id = copy.book_id " +
-            "where book.title = ?";
+            "where book.title like ?";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setString(1, nameOfAuthor);
+      preparedStatement.setString(1, "%" + nameOfAuthor + "%");
 
       ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -111,9 +111,9 @@ public class BookDaoImpl implements BookDao {
     String query = "SELECT title, book_description, date_of_publisment FROM book " +
             "JOIN copy ON book.id = copy.book_id " +
             "JOIN author on library.copy.author_id = author.id " +
-            "where author.author_name = ? GROUP BY book.title";
+            "where author.author_name like ? GROUP BY book.title";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setString(1, nameOfAuthor);
+      preparedStatement.setString(1, "%" + nameOfAuthor + "%");
       ResultSet resultSet = preparedStatement.executeQuery();
 
       BookMapper bookMapper = new BookMapper();
@@ -152,10 +152,10 @@ public class BookDaoImpl implements BookDao {
   }
 
   private List<BookDto> getBookRating(String orderBy) {
-    String query = "SELECT count(title), book.title, book.book_description, book.date_of_publisment FROM book " +
-            "join copy_book on book.id = copy_book.book_id\n" +
-            "join journal on journal.book_id = copy_book.book_id " +
-            "group by copy_book.book_id order by count(title) " + orderBy + ";";
+    String query = "SELECT count(copy_book.book_id), book.title, book.book_description, book.date_of_publisment FROM book" +
+            " left join copy_book on book.id = copy_book.book_id " +
+            "left join journal on journal.book_id = copy_book.book_id " +
+            "group by book.id order by count(copy_book.book_id)" + orderBy + ";";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
       ResultSet resultSet = preparedStatement.executeQuery();

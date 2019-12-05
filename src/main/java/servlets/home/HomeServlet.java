@@ -18,7 +18,10 @@ public class HomeServlet extends HttpServlet {
 
     req.setAttribute("books", bookService.findAllBook());
 
+    //lightgreen   #eb6262
+
     RequestDispatcher requestDispatcher = req.getRequestDispatcher("home.jsp");
+
     requestDispatcher.forward(req, resp);
   }
 }

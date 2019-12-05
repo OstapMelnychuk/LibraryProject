@@ -5,10 +5,11 @@
     <title>Bootstrap Case</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="resources/js/jQuery.js"></script>
 </head>
 <body>
-<jsp:include page="navbar.jsp" />
+<jsp:include page="navbar.jsp"/>
 
 <div class="relate">
     <div class="left-collapse">
@@ -53,7 +54,7 @@
                                 <label for="title" class="sr-only">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="title">
                             </div>
-                            <button type="submit" class="btn btn-primary mb-2">Search</button>
+                            <button id="home" type="submit" class="btn btn-primary mb-2">Search</button>
                         </form>
                     </div>
                 </div>
@@ -93,7 +94,8 @@
                 <div class="card-header" id="headingFour">
                     <h5 class="mb-0">
                         <form class="form-inline" method="post" action="/back-top">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
+                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                    data-target="#collapseFour"
                                     aria-expanded="false" aria-controls="collapseFour">
                                 Top 10 books
                             </button>
@@ -107,7 +109,8 @@
                 <div class="card-header" id="headingFive">
                     <h5 class="mb-0">
                         <form class="form-inline" method="post" action="/top">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+                            <button class="btn btn-link collapsed"
+                                    data-toggle="collapse" data-target="#collapseFive"
                                     aria-expanded="false" aria-controls="collapseFive">
                                 Top unknown 10 books
                             </button>
@@ -118,19 +121,18 @@
             </div>
         </div>
     </div>
-
     <div class="for">
         <c:forEach items="${books}" var="element">
             <li class="list-group-item d-flex justify-content-between align-items-center li_button">
                     ${element.title}
                 <span class="badge badge-primary badge-pill">${element.dateOfPublishment}</span>
                 <div>
-                    ${element.description}
+                        ${element.description}
                 </div>
             </li>
         </c:forEach>
     </div>
-
+</div>
 </div>
 
 </body>
