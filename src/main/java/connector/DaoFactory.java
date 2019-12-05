@@ -2,6 +2,7 @@ package connector;
 
 import dao.AuthorDaoImpl;
 import dao.BookDaoImpl;
+import dao.UserDao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -52,6 +53,9 @@ public final class DaoFactory {
     return new AuthorDaoImpl(connection);
   }
 
+  public static UserDao userDao() {
+    return new UserDao(connection);
+  }
 
   /**
    * Method for closing connection.

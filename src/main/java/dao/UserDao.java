@@ -1,8 +1,9 @@
 package dao;
 
 import connector.DaoFactory;
-import dao.interfaces.UserDAOInterface;
+import dao.interfaces.UserDaoInterface;
 import dao.interfaces.mappers.BookMapper;
+import dao.interfaces.mappers.UserMapper;
 import models.Book;
 import models.User;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-public class UserDao implements UserDAOInterface {
+public class UserDao implements UserDaoInterface {
   private Connection connection;
 
   public UserDao(Connection connection) {
@@ -33,28 +34,19 @@ public class UserDao implements UserDAOInterface {
   }
 
   @Override
-  public Optional<User> readUserById(Integer id) throws SQLException {
-    User user = null;
+  public List<User> readUserById(Integer id) throws SQLException {
+    List<User> userList = new ArrayList<>();
     PreparedStatement preparedStatement = connection.prepareStatement("Select * From USERS Where id = " + id);
     ResultSet resultSet = preparedStatement.executeQuery();
-    resultSet.next();
-    user = new User(resultSet.getInt(1), resultSet.getString(2),
-      resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5),
-      resultSet.getString(6), resultSet.getInt(7), resultSet.getString(8));
-    return Optional.ofNullable(user);
+    return new UserMapper().rowMapper(resultSet);
   }
 
   @Override
-  public Optional<User> readUserByLogin(String login) throws SQLException {
-    User user = null;
-
+  public List<User> readUserByLogin(String login) throws SQLException {
+    List<User> users = new ArrayList<>();
     PreparedStatement preparedStatement = connection.prepareStatement("Select * From USERS Where login = " + login);
     ResultSet resultSet = preparedStatement.executeQuery();
-    resultSet.next();
-    user = new User(resultSet.getInt(1), resultSet.getString(2),
-      resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5),
-      resultSet.getString(6), resultSet.getInt(7), resultSet.getString(8));
-    return Optional.ofNullable(user);
+    return new UserMapper().rowMapper(resultSet);
   }
 
   @Override
