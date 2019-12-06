@@ -45,10 +45,10 @@ public class BookDaoImpl implements BookDao {
             " FROM book " +
             "join copy on copy.book_id = book.id" +
             " join author on copy.author_id = author.id " +
-            "Where title = ?";
+            "Where title  like ?";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setString(1, title);
+      preparedStatement.setString(1, "%" + title);
       ResultSet resultSet = preparedStatement.executeQuery();
 
       BookMapper bookMapper = new BookMapper();
@@ -84,7 +84,7 @@ public class BookDaoImpl implements BookDao {
             "where book.title like ?";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setString(1, "%" + nameOfAuthor + "%");
+      preparedStatement.setString(1, "%" + nameOfAuthor);
 
       ResultSet resultSet = preparedStatement.executeQuery();
 
