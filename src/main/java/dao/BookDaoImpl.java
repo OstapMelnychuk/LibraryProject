@@ -105,6 +105,7 @@ public class BookDaoImpl implements BookDao {
             "where author.author_name like ? GROUP BY book.title";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
       preparedStatement.setString(1, "%" + nameOfAuthor + "%");
+
       ResultSet resultSet = preparedStatement.executeQuery();
 
       BookMapper bookMapper = new BookMapper();
@@ -175,7 +176,7 @@ public class BookDaoImpl implements BookDao {
     try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
       preparedStatement.setString(1, book.getTitle());
       preparedStatement.setString(2, book.getDescription());
-      preparedStatement.setDate(3, Date.valueOf(LocalDate.of(2015, 12, 31)));
+      preparedStatement.setDate(3, Date.valueOf(LocalDate.of(2019, 19, 19)));
       preparedStatement.setInt(4, book.getCount());
       preparedStatement.executeUpdate();
 

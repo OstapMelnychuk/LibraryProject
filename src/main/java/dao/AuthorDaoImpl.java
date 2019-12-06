@@ -49,4 +49,14 @@ public class AuthorDaoImpl implements AuthorDao {
       throw new RuntimeException(e);
     }
   }
+
+  @Override
+  public void update(Author author) {
+    System.out.println("This method is not applicable");
+  }
+
+  @Override
+  public void delete(Author author) {
+    System.out.println("This method is not applicable");
+  }
 }

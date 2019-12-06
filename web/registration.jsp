@@ -11,21 +11,6 @@
         <div>
             <form method="post" action="/">
                 <div class="form-group">
-                    <label for="login">Login</label>
-                    <input type="text" class="form-control" id="login" aria-describedby="login"
-                           placeholder="Enter your login">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Log in</button>
-            </form>
-        </div>
-
-        <div>
-            <form method="post" action="/">
-                <div class="form-group">
                     <label for="user_name">Name</label>
                     <input type="text" class="form-control" id="user_name" aria-describedby="emailHelp"
                            placeholder="Enter your name">

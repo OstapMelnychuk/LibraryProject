@@ -23,7 +23,6 @@ public class SearchByAuthorServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.setAttribute("show_author", true);
     req.setAttribute("books", bookService.findAllBooksByAuthor(req.getParameter("author")));
     req.getRequestDispatcher("/books.jsp").include(req, resp);
   }

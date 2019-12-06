@@ -18,8 +18,9 @@
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" aria-expanded="true" data-target="#collapseOne"
-                                 aria-controls="collapseTwo">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" aria-expanded="true"
+                                data-target="#collapseOne"
+                                aria-controls="collapseTwo">
                             Search by Author
                         </button>
                     </h5>
@@ -75,16 +76,19 @@
                     <div class="card-body">
                         <form class="form-inline" method="post" action="/search-year">
                             <div class="form-group mx-sm-3 mb-2 first-year">
-                                <label for="first-year" class="sr-only">Title</label>
+                                <label for="first-year" class="sr-only">First year</label>
                                 <input type="text" class="form-control" id="first-year" name="first-year"
                                        placeholder="first year">
                             </div>
                             <div class="form-group mx-sm-3 mb-2 first-year">
-                                <label for="last-year" class="sr-only">Title</label>
+                                <label for="last-year" class="sr-only">Last year</label>
                                 <input type="text" class="form-control" id="last-year" name="last-year"
                                        placeholder="last year">
                             </div>
-                            <div></div>
+                            <br>
+                            <small id="emailHelp" class="form-text text-muted" style="color: deeppink"><c:if
+                                    test="${not empty error}">${error}</c:if></small>
+                            <br>
                             <button type="submit" class="btn btn-primary mb-2 year-button">Search</button>
                         </form>
                     </div>

@@ -18,6 +18,14 @@
                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name">
            </div>
            <div class="form-group">
+               <label for="exampleFormControlInput1.2">Author's second name</label>
+               <input type="text" class="form-control" id="exampleFormControlInput1.2" placeholder="second name">
+           </div>
+           <div class="form-group">
+               <label for="exampleFormControlInput1.3">Author's surname</label>
+               <input type="text" class="form-control" id="exampleFormControlInput1.3" placeholder="surname">
+           </div>
+           <div class="form-group">
                <label for="exampleFormControlInput1">Title</label>
                <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="title">
            </div>
@@ -33,7 +41,7 @@
                <label for="exampleFormControlInput1">Quantity</label>
                <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="quantity">
            </div>
-           <button type="submit" class="btn btn-primary mb-2">Search</button>
+           <button type="submit" class="btn btn-primary mb-2">Add book</button>
        </form>
    </div>
 </div>
