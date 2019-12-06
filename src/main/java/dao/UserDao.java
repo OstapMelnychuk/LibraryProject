@@ -25,7 +25,7 @@ public class UserDao implements UserDaoInterface {
   public static void main(String[] args) {
     UserDao userDao = new UserDao(DaoFactory.getConnection());
     try {
-      System.out.println(userDao.logIn("log1", "pass"));
+      userDao.readUserById(4);
     } catch (SQLException e) {
       e.printStackTrace();
     }
