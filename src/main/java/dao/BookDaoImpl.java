@@ -48,7 +48,7 @@ public class BookDaoImpl implements BookDao {
             "Where title  like ?";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setString(1, "%" + title);
+      preparedStatement.setString(1, "%" + title + "%");
       ResultSet resultSet = preparedStatement.executeQuery();
 
       BookMapper bookMapper = new BookMapper();
@@ -189,6 +189,16 @@ public class BookDaoImpl implements BookDao {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public void update(Book book) {
+    System.out.println("This method is not applicable");
+  }
+
+  @Override
+  public void delete(Book book) {
+    System.out.println("This method is not applicable");
   }
 
 

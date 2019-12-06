@@ -51,4 +51,13 @@ public class BookService {
   public void save(Book book){
     DaoFactory.bookDao().save(book);
   }
+
+  public boolean isListExist(ArrayList<BookDto> books){
+    if(books.equals(null) || books.isEmpty()){
+      return false;
+    }else{
+      return true;
+    }
+
+  }
 }

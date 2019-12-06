@@ -18,8 +18,8 @@
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"
-                                aria-expanded="false" aria-controls="collapseTwo">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" aria-expanded="true" data-target="#collapseOne"
+                                 aria-controls="collapseTwo">
                             Search by Author
                         </button>
                     </h5>
@@ -123,21 +123,32 @@
         </div>
     </div>
     <div class="for">
-        <c:forEach items="${books}" var="element">
-            <li class="list-group-item d-flex justify-content-between align-items-center li_button">
-                    ${element.title}
-                <span class="badge badge-primary badge-pill" <c:if test="${not element.isAvailable()}">style="background-color: #d31444"</c:if>
-                      <c:if test="${element.isAvailable()}">style="background-color: #4adf75"</c:if>>
+        <c:choose>
+
+            <c:when test="${not empty books}">
+                <c:forEach items="${books}" var="element">
+                    <li class="list-group-item d-flex justify-content-between align-items-center li_button">
+                            ${element.title}
+                        <span class="badge badge-primary badge-pill"
+                              <c:if test="${not element.isAvailable()}">style="background-color: #d31444"</c:if>
+                              <c:if test="${element.isAvailable()}">style="background-color: #4adf75"</c:if>>
 
                     <c:if test="${element.isAvailable()}"> is available</c:if>
 
                     <c:if test="${not element.isAvailable()}">is not available</c:if>
                 </span>
-                <div>
-                        ${element.description}
-                </div>
-            </li>
-        </c:forEach>
+                        <div>
+                                ${element.description}
+                        </div>
+                    </li>
+                </c:forEach>
+            </c:when>
+
+            <c:when test="${empty books && !isListExist}">
+                <h3 style="color:#ca5757;">Sorry, but we don't have such books(</h3>
+            </c:when>
+
+        </c:choose>
     </div>
 </div>
 </div>

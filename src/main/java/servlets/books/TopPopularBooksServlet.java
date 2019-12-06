@@ -11,10 +11,15 @@ import java.io.IOException;
 
 @WebServlet("/top")
 public class TopPopularBooksServlet extends HttpServlet {
+  BookService bookService;
+
+  @Override
+  public void init() throws ServletException {
+    bookService = new BookService();
+  }
+
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    BookService bookService = new BookService();
-
     req.setAttribute("books", bookService.getTenTheMostPopularBook());
     req.getRequestDispatcher("/books.jsp").include(req, resp);
   }
