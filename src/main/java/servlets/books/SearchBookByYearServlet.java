@@ -29,12 +29,12 @@ public class SearchBookByYearServlet extends HttpServlet {
       int firstYear = Integer.parseInt(req.getParameter("first-year"));
       int lastYear = Integer.parseInt(req.getParameter("last-year"));
 
-      if (bookService.enteredInTheOrderOfYears(firstYear, lastYear)) {
-        req.setAttribute("books", bookService.findAllBooksBetweenDate(firstYear, lastYear));
+      if (!bookService.isEnteredInTheOrderOfYears(firstYear, lastYear) && !bookService.isNegative(firstYear, lastYear)) {
+        req.setAttribute("error", YEARS_ARE_NOT_IN_ORDER + lastYear + " and " + firstYear);
       } else if (bookService.isNegative(firstYear, lastYear)) {
         req.setAttribute("error", NEGATIVE_YEAR);
       } else {
-        req.setAttribute("error", YEARS_ARE_NOT_IN_ORDER + lastYear + " and " + firstYear);
+        req.setAttribute("books", bookService.findAllBooksBetweenDate(firstYear, lastYear));
       }
     } catch (NumberFormatException e) {
         req.setAttribute("error", YEARS_ARE_TOO_BIG);

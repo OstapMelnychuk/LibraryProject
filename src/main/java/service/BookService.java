@@ -52,7 +52,7 @@ public class BookService {
     DaoFactory.bookDao().save(book);
   }
 
-  public boolean enteredInTheOrderOfYears(int firstYear, int lastYear) {
+  public boolean isEnteredInTheOrderOfYears(int firstYear, int lastYear) {
     return lastYear >= firstYear;
   }
 
