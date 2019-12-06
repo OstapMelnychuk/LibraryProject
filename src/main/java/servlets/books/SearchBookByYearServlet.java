@@ -40,6 +40,7 @@ public class SearchBookByYearServlet extends HttpServlet {
         req.setAttribute("error", YEARS_ARE_TOO_BIG);
     }
 
+    req.setAttribute("year_show", true);
     req.getRequestDispatcher("/books.jsp").include(req, resp);
   }
 }

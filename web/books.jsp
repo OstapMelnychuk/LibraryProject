@@ -18,15 +18,16 @@
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" aria-expanded="true"
+                        <button class="btn btn-link" data-toggle="collapse" aria-expanded="false"
                                 data-target="#collapseOne"
                                 aria-controls="collapseTwo">
                             Search by Author
                         </button>
                     </h5>
                 </div>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body">
+
+                <div id="collapseOne" class="collapse <c:if test="${author_show}">in</c:if>" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body cart">
                         <form class="form-inline" method="post" action="/search-author">
                             <div class="form-group mx-sm-3 mb-2">
                                 <label for="authors name" class="sr-only">Author's name</label>
@@ -49,7 +50,7 @@
                         </button>
                     </h5>
                 </div>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div id="collapseTwo" class="collapse <c:if test="${title_show}">in</c:if>" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
                         <form class="form-inline" method="post" action="/search-title">
                             <div class="form-group mx-sm-3 mb-2">
@@ -72,7 +73,7 @@
                         </button>
                     </h5>
                 </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div id="collapseThree" class="collapse <c:if test="${year_show}">in</c:if>" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
                         <form class="form-inline" method="post" action="/search-year">
                             <div class="form-group mx-sm-3 mb-2 first-year">

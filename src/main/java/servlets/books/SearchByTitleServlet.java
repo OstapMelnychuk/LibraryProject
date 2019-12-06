@@ -22,6 +22,7 @@ public class SearchByTitleServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setAttribute("books", bookService.findAllBookByTitle(req.getParameter("title")));
+    req.setAttribute("title_show", true);
 
     req.getRequestDispatcher("/books.jsp").include(req, resp);
   }
