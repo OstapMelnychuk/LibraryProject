@@ -1,0 +1,63 @@
+.left-collapse {
+    padding-left: 50px;
+    width: 25%;
+}
+
+.text-right {
+    margin-left: 736px;
+}
+
+.first-year {
+    padding: 1%;
+}
+
+.badge {
+    margin-top: 10px;
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #d31444;
+    border-radius: 10px;
+}
+
+
+.year-button {
+    margin-left: 3px;
+    margin-top: 4px;
+}
+
+.navbar-default .navbar-text {
+    color: #777;
+    margin-left: 733px;
+}
+
+.cartochka {
+    width: 10%;
+    height: 10%;
+}
+
+.form-add {
+    margin-left: 20px;
+    width: 20%;
+}
+
+.for {
+    width: 36%;
+    margin-left: 150px;
+}
+
+.relate {
+    display: flex;
+    flex-direction: row;
+}
+
+.li_button {
+    margin-bottom: 1%;
+}

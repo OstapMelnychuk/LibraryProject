@@ -1,6 +1,7 @@
 package service;
 
 import connector.DaoFactory;
+import dto.BookDto;
 import models.Book;
 import models.User;
 
@@ -68,7 +69,7 @@ public class UserService {
     return -1;
   }
 
-  public List<Book> getUserBooksTaken(Integer id){
+  public List<BookDto> getUserBooksTaken(Integer id){
     try {
       return DaoFactory.userDao().getUserBooksTaken(id);
     } catch (SQLException e) {
@@ -77,7 +78,7 @@ public class UserService {
     return null;
   }
 
-  public List<Book> getUserBooksNotReturned(Integer id){
+  public List<BookDto> getUserBooksNotReturned(Integer id){
     try {
       return DaoFactory.userDao().getUserBooksNotReturned(id);
     } catch (SQLException e) {

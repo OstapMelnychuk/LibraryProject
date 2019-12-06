@@ -30,8 +30,13 @@ CREATE TABLE `journal` (
   `book_exemplar_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `tb_user` (`user_id`),
+<<<<<<< HEAD:DB/Dump20191206/library_journal.sql
   KEY `book_exemplar_id_idx` (`book_exemplar_id`),
   CONSTRAINT `book_exemplar_id` FOREIGN KEY (`book_exemplar_id`) REFERENCES `copy_book` (`id`),
+=======
+  KEY `tb_book_copy_t` (`book_id`),
+  CONSTRAINT `tb_book_copy_t` FOREIGN KEY (`book_id`) REFERENCES `copy_book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+>>>>>>> e6a72ac0356cc83f5bb19d96d04313085f390dcd:DB/Dump20191204/library_journal.sql
   CONSTRAINT `tb_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

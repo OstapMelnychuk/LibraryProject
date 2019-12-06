@@ -1,13 +1,31 @@
 <html>
 <head>
-  <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link href="resources/css/loginAndCreate.css" rel="stylesheet" type="text/css">
+    <title>Library</title>
 </head>
 <body>
 <div id="main_div">
-  <jsp:include page="navbar.jsp" />
+    <jsp:include page="navbar.jsp"/>
 
-  <img width="100%"
-       src="https://files.northernbeaches.nsw.gov.au/sites/default/files/styles/gi--main-thumbnail/public/images/general-information/glen-street/gls-webtile.jpg?itok=wSTLUmND">
+    <div><a href="registration.jsp">Sign up</a></div>
+
+    <div id="login_body_div" class="login">
+        <div>
+            <form method="post" action="/">
+                <div class="form-group">
+                    <label for="login">Login</label>
+                    <input type="text" class="form-control" id="login" aria-describedby="login"
+                           placeholder="Enter your login">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

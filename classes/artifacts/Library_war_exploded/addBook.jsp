@@ -1,42 +1,51 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
-    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
-    <link href="resources/css/addBook.css" rel="stylesheet" type="text/css">
+    <title>Library</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="resources/css/addBook.css">
 </head>
 <body>
-<div id="main_div">
-    <jsp:include page="navbar.jsp"/>
-    <div id="add_book_body_div">
-        <div id="add_book_block">
-            <form name="" action="/" method="">
-                <div class="add_book_container">
-                    <input class="tftextinput form_input_width" type="text" placeholder="Author" name="book_author"
-                           value="">
-                </div>
-                <div class="add_book_container">
-                    <input class="tftextinput form_input_width" cols="50" type="text" placeholder="Title"
-                           name="book_title" value="">
-                </div>
-                <div class="add_book_container">
-                    <textarea class="tftextinput form_input_width" rows="10" cols="50" name="book_description"
-                              placeholder="Book description"></textarea>
+<jsp:include page="navbar.jsp" />
 
-                </div>
-                <div class="add_book_container">
-                    <input class="tftextinput form_input_width" type="text"
-                           placeholder="Edition date format for example 2019-09-31" name="date_of_publishment" value="">
-                </div>
-                <div class="add_book_container">
-                    <input class="tftextinput form_input_width" type="text" placeholder="Quantity" name="quantity"
-                           value="">
-                </div>
-                <div class="add_book_container">
-                    <button type="submit" class="tfbutton login_button">Add the book</button>
-                </div>
-            </form>
-        </div>
-
-    </div>
+<div class="form-add">
+   <div class="form-add-book">
+       <form method="post" action="/">
+           <div class="form-group">
+               <label for="exampleFormControlInput1">Author's name</label>
+               <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name">
+           </div>
+           <div class="form-group">
+               <label for="exampleFormControlInput1.2">Author's second name</label>
+               <input type="text" class="form-control" id="exampleFormControlInput1.2" placeholder="second name">
+           </div>
+           <div class="form-group">
+               <label for="exampleFormControlInput1.3">Author's surname</label>
+               <input type="text" class="form-control" id="exampleFormControlInput1.3" placeholder="surname">
+           </div>
+           <div class="form-group">
+               <label for="exampleFormControlInput1">Title</label>
+               <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="title">
+           </div>
+           <div class="form-group">
+               <label for="exampleFormControlTextarea1">Book description</label>
+               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+           </div>
+           <div class="form-group">
+               <label for="exampleFormControlInput1">Edition date</label>
+               <input type="date" class="form-control" id="exampleFormControlInput3" placeholder="2019-10-10">
+           </div>
+           <div class="form-group">
+               <label for="exampleFormControlInput1">Quantity</label>
+               <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="quantity">
+           </div>
+           <button type="submit" class="btn btn-primary mb-2">Add book</button>
+       </form>
+   </div>
 </div>
+
 </body>
 </html>
+

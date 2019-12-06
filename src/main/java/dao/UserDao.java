@@ -4,15 +4,14 @@ import connector.DaoFactory;
 import dao.interfaces.UserDaoInterface;
 import dao.interfaces.mappers.BookMapper;
 import dao.interfaces.mappers.UserMapper;
+import dto.BookDto;
 import models.Book;
 import models.User;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class UserDao implements UserDaoInterface {
@@ -24,8 +23,9 @@ public class UserDao implements UserDaoInterface {
 
   public static void main(String[] args) {
     UserDao userDao = new UserDao(DaoFactory.getConnection());
+    User user = new User(5, "Dima", "Dimas", "dima123", 2, "dima@gmail.com", 20, "1999-11-11");
     try {
-      userDao.readUserById(4);
+      userDao.createUser(user);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -127,10 +127,10 @@ public class UserDao implements UserDaoInterface {
     throw new SQLException("There is no row with id " + id);
   }
 
-  public List<Book> getUserBooksTaken(Integer id) throws SQLException {
+  public List<BookDto> getUserBooksTaken(Integer id) throws SQLException {
     String query = "Select * From BOOK " +
     "join copy_book on copy_book.book_id = book.id " +
-    "join journal on copy_book.book_id = journal.book_id " +
+    "join journal on copy_book.book_id = journal.book_exemplar_id " +
     " Where journal.user_id = ? AND journal.date_of_input  IS NOT NULL";
     List<Book> books = new ArrayList<>();
     PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -139,12 +139,11 @@ public class UserDao implements UserDaoInterface {
     return new BookMapper().rowMapper(resultSet);
   }
 
-  public List<Book> getUserBooksNotReturned(Integer id) throws SQLException {
-    ArrayList<Book> books = new ArrayList<>();
-    String query = "Select * From BOOK " +
-    "join copy_book on copy_book.book_id = book.id " +
-    "join journal on copy_book.book_id = journal.book_id " +
-    "Where journal.user_id = ? AND journal.date_of_input  IS NULL";
+  public List<BookDto> getUserBooksNotReturned(Integer id) throws SQLException {
+    String query = "Select * From BOOK \n" +
+      "join copy_book on copy_book.book_id = Book.id\n" +
+      "join journal on copy_book.id = journal.book_exemplar_id\n" +
+      "Where journal.user_id = 1 AND journal.date_of_input  IS NULL;";
     PreparedStatement preparedStatement = connection.prepareStatement(query);
     preparedStatement.setInt(1, id);
     ResultSet resultSet = preparedStatement.executeQuery();
