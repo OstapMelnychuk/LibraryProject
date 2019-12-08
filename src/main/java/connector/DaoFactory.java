@@ -3,6 +3,9 @@ package connector;
 import dao.AuthorDaoImpl;
 import dao.BookDaoImpl;
 import dao.UserDao;
+import dto.AuthorDto;
+import models.Author;
+import models.Book;
 
 import java.sql.*;
 
@@ -20,6 +23,12 @@ public final class DaoFactory {
 
   public static void main(String[] args) {
     //bookDao().getTenTheMostPopularBook("asc");
+
+    //System.out.println(authorDao().isAuthorExist(new Author(1,"Anton", "Meme", "LOLs")));
+bookDao().getTenTheMostPopularBook();
+
+    bookDao().save(new Book(1, "Three comrads", "WWII", "1999-12-11", 10,
+            new Author(1, "Erik", "Maria", "Remark"), true));
   }
   /**
    * Private constructor used for Singleton implementation

@@ -1,15 +1,44 @@
 package dao;
 
 import dao.interfaces.AuthorDao;
+import dto.AuthorDto;
 import models.Author;
+import models.Book;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuthorDaoImpl implements AuthorDao {
   private final Connection connection;
 
   public AuthorDaoImpl(Connection connection) {
     this.connection = connection;
+  }
+
+  @Override
+  public List<AuthorDto> findAll() {
+    String query = "Select * from author";
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      List<AuthorDto> authors = new ArrayList<>();
+
+      while (resultSet.next()){
+        String name = resultSet.getString(2);
+        String secondname = resultSet.getString(3);
+        String surname = resultSet.getString(4);
+
+        resultSet.getString(3);
+
+        authors.add(new AuthorDto(name, secondname, surname));
+      }
+
+      return authors;
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   @Override
@@ -58,5 +87,28 @@ public class AuthorDaoImpl implements AuthorDao {
   @Override
   public void delete(Author author) {
     System.out.println("This method is not applicable");
+  }
+
+  @Override
+  public boolean isAuthorExist(Book book) {
+    String query = "Select * from author where author_name = ? AND author_secondname = ? AND author_surname = ?";
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+      preparedStatement.setString(1, book.getAuthor().getFirstname());
+      preparedStatement.setString(2, book.getAuthor().getSecondname());
+      preparedStatement.setString(3, book.getAuthor().getSurname());
+
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      if(resultSet.next()){
+        book.getAuthor().setId(resultSet.getInt(1));
+
+        return true;
+      }
+
+    }catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
   }
 }

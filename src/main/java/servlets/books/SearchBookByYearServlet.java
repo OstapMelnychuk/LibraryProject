@@ -13,7 +13,7 @@ import java.io.IOException;
 public class SearchBookByYearServlet extends HttpServlet {
   public static final String NEGATIVE_YEAR = "The years cannot be negative";
   public static final String YEARS_ARE_NOT_IN_ORDER = "Years are not in order, perhaps you meant ";
-  public static final String YEARS_ARE_TOO_BIG = "Your year is too big. The maximum number is 2147483647";
+  public static final String YEARS_ARE_INCORECT = "Your year is too big or it isn't number. The maximum number is 2147483647";
 
   BookService bookService;
 
@@ -37,7 +37,7 @@ public class SearchBookByYearServlet extends HttpServlet {
         req.setAttribute("books", bookService.findAllBooksBetweenDate(firstYear, lastYear));
       }
     } catch (NumberFormatException e) {
-        req.setAttribute("error", YEARS_ARE_TOO_BIG);
+        req.setAttribute("error", YEARS_ARE_INCORECT);
     }
 
     req.setAttribute("year_show", true);

@@ -1,11 +1,9 @@
 package service;
 
 import connector.DaoFactory;
-import dao.interfaces.BookDao;
 import dto.BookDto;
 import models.Book;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,10 +20,6 @@ public class BookService {
 
   public boolean isBookAvailable(String nameOfBook) {
     return DaoFactory.bookDao().isBookAvailable(nameOfBook);
-  }
-
-  public double getAvarageAgeOfUserByBook(String nameOfAuthor) {
-    return DaoFactory.bookDao().getAvarageAgeOfUserByBook(nameOfAuthor);
   }
 
   public List<BookDto> findAllBooksBetweenDate(int firstYear, int lastYear) {

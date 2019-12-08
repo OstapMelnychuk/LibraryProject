@@ -10,7 +10,6 @@ public interface BookDao {
   List<BookDto> findAll();
   List<BookDto> findAllBookByTitle(String title);
   boolean isBookAvailable(String book);
-  double getAvarageAgeOfUserByBook(String nameOfAuthor);
   List<BookDto> findAllBooksBetweenDate(int firtYear, int secondYear);
   List<BookDto> findAllBooksByAuthor(String nameOfAuthor);
   List<BookDto> getTenTheMostPopularBook();
