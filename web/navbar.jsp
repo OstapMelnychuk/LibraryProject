@@ -15,14 +15,14 @@
             </button>
         </div>
         <div class="collapse navbar-collapse navbar-menubuilder">
-            <ul class="nav navbar-nav navbar-left">
+            <ul class="nav navbar-nav navbar-left" style="width: 98%">
                 <c:if test="${admin == 1 || admin == 2}"><li><a href="/home" class="hvr-underline-reveal">Home</a></li></c:if>
                 <c:if test="${admin == 1 || admin == 2}"><li><a href="/books" class="hvr-underline-reveal">Books</a></li></c:if>
                 <c:if test="${admin == 1}"><li><a href="/users" class="hvr-underline-reveal">Users</a></li></c:if>
-                <c:if test="${admin != 1 && admin != 2}"> <li><a href="/home" class="hvr-underline-reveal">         </a></li> </c:if>
                 <c:if test="${admin == 1}"><li><a href="/addBook" class="hvr-underline-reveal">Add book</a></li></c:if>
-                <div class="navbar-text mr-3  login-text">
-                    <a href="/login"><c:if test="${admin == 1 || admin == 2}">Log out</c:if><c:if test="${admin != 1 && admin != 2}">Log in</c:if></a>
+                <div class="navbar-text mr-3  login-text" style="float: right">
+                    <li><a href="/login" class="hvr-underline-reveal" style="float: right"><c:if test="${admin == 1 || admin == 2}">Log out
+                    </c:if><c:if test="${admin != 1 && admin != 2}">Log in</c:if></a></li>
                 </div>
             </ul>
         </div>

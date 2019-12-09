@@ -4,12 +4,17 @@
 }
 
 .text-right {
-    float: left;
+    float: right;
 }
 
+    .navbar-left {
+        width: 98%;
+        float: left!important;
+    }
+
+
 login-text {
-    float: left;
-    position: absolute;
+    float: right;
 }
 
 .first-year {
