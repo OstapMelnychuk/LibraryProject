@@ -1,5 +1,6 @@
 package servlets.books;
 
+import dao.UserDao;
 import service.BookService;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,9 @@ public class TopPopularBooksServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setAttribute("admin", UserDao.currentUser.getRoleId());
     req.setAttribute("books", bookService.getTenTheMostPopularBook());
+
     req.getRequestDispatcher("/books.jsp").include(req, resp);
   }
 }

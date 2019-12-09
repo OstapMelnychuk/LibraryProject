@@ -12,15 +12,15 @@
 
     <div id="login_body_div" class="login">
         <div>
-            <form method="post" action="/">
+            <form method="post" action="/login">
                 <div class="form-group">
                     <label for="login">Login</label>
-                    <input type="text" class="form-control" id="login" aria-describedby="login"
+                    <input type="text" class="form-control" id="login" name="login" aria-describedby="login"
                            placeholder="Enter your login">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-primary">Log in</button>
             </form>

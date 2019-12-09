@@ -1,5 +1,6 @@
 package servlets.books;
 
+import dao.UserDao;
 import dao.interfaces.BookDao;
 import service.BookService;
 
@@ -25,6 +26,8 @@ public class SearchByAuthorServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setAttribute("books", bookService.findAllBooksByAuthor(req.getParameter("author")));
     req.setAttribute("author_show", true);
+    req.setAttribute("admin", UserDao.currentUser.getRoleId());
+
 
     req.getRequestDispatcher("/books.jsp").include(req, resp);
   }

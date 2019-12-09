@@ -1,5 +1,6 @@
 package servlets.home;
 
+import dao.UserDao;
 import service.BookService;
 
 import javax.servlet.RequestDispatcher;
@@ -12,16 +13,21 @@ import java.io.IOException;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    BookService bookService = new BookService();
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (UserDao.currentUser != null) {
 
-    req.setAttribute("books", bookService.findAllBook());
+            BookService bookService = new BookService();
 
-    System.out.println(bookService.findAllBook().get(0).isAvailable());
+            req.setAttribute("books", bookService.findAllBook());
+            req.setAttribute("admin", UserDao.currentUser.getRoleId());
 
-    RequestDispatcher requestDispatcher = req.getRequestDispatcher("home.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("home.jsp");
 
-    requestDispatcher.forward(req, resp);
-  }
+            requestDispatcher.forward(req, resp);
+        } else {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/login");
+            requestDispatcher.forward(req, resp);
+        }
+    }
 }

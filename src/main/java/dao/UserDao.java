@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class UserDao implements UserDaoInterface {
   private Connection connection;
+  public static User currentUser;
 
   public UserDao(Connection connection) {
     this.connection = connection;
@@ -211,16 +212,17 @@ public class UserDao implements UserDaoInterface {
     return averageAge / counter;
   }
 
-  public Integer logIn(String login, String password) throws SQLException {
+  public void logIn(String login, String password){
     String query = "Select * From Users " +
-      "Where login = ? AND user_password = ?";
-    PreparedStatement preparedStatement = connection.prepareStatement(query);
-    preparedStatement.setString(1, login);
-    preparedStatement.setString(2, password);
-    ResultSet resultSet = preparedStatement.executeQuery();
-    if(resultSet.first()){
-      return resultSet.getInt(1);
+            "Where login = ? AND user_password = ?";
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setString(1, login);
+      preparedStatement.setString(2, password);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      currentUser = new UserMapper().rowMapper(resultSet).get(0);
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    throw new SQLException("No such User For login " + login + " and password " + password);
   }
 }

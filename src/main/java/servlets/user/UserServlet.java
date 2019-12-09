@@ -1,5 +1,8 @@
 package servlets.user;
 
+import dao.UserDao;
+import models.User;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,9 +13,17 @@ import java.io.IOException;
 
 @WebServlet("/users")
 public class UserServlet extends HttpServlet {
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    RequestDispatcher requestDispatcher = req.getRequestDispatcher("users.jsp");
-    requestDispatcher.forward(req, resp);
-  }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (UserDao.currentUser != null) {
+
+            req.setAttribute("admin", UserDao.currentUser.getRoleId());
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("users.jsp");
+            requestDispatcher.forward(req, resp);
+        } else {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/login");
+            requestDispatcher.forward(req, resp);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package servlets.books;
 
+import dao.UserDao;
 import service.BookService;
 
 import javax.servlet.ServletException;
@@ -41,6 +42,8 @@ public class SearchBookByYearServlet extends HttpServlet {
     }
 
     req.setAttribute("year_show", true);
+    req.setAttribute("admin", UserDao.currentUser.getRoleId());
+
     req.getRequestDispatcher("/books.jsp").include(req, resp);
   }
 }

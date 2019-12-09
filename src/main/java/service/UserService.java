@@ -107,12 +107,7 @@ public class UserService {
     return -1;
   }
 
-  public Integer logIn(String login, String password){
-    try {
-      return DaoFactory.userDao().logIn(login, password);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return null;
+  public void logIn(String login, String password){
+    DaoFactory.userDao().logIn(login, password);
   }
 }

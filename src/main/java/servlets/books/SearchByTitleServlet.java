@@ -1,5 +1,6 @@
 package servlets.books;
 
+import dao.UserDao;
 import service.BookService;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,8 @@ public class SearchByTitleServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setAttribute("books", bookService.findAllBookByTitle(req.getParameter("title")));
     req.setAttribute("title_show", true);
+    req.setAttribute("admin", UserDao.currentUser.getRoleId());
+
 
     req.getRequestDispatcher("/books.jsp").include(req, resp);
   }

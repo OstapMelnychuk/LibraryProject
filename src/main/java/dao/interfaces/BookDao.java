@@ -15,6 +15,6 @@ public interface BookDao {
   List<BookDto> getTenTheMostPopularBook();
   List<BookDto> getTenTheMostUnPopularBook();
   void save(Book book);
-  void update(Book book);
+  void update(Book book, int count);
   void delete(Book book);
 }

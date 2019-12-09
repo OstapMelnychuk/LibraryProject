@@ -4,7 +4,12 @@
 }
 
 .text-right {
-    margin-left: 736px;
+    float: left;
+}
+
+login-text {
+    float: left;
+    position: absolute;
 }
 
 .first-year {
@@ -35,7 +40,6 @@
 
 .navbar-default .navbar-text {
     color: #777;
-    margin-left: 733px;
 }
 
 .cartochka {

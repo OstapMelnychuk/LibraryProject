@@ -25,10 +25,10 @@ public final class DaoFactory {
     //bookDao().getTenTheMostPopularBook("asc");
 
     //System.out.println(authorDao().isAuthorExist(new Author(1,"Anton", "Meme", "LOLs")));
-bookDao().getTenTheMostPopularBook();
 
-    bookDao().save(new Book(1, "Three comrads", "WWII", "1999-12-11", 10,
-            new Author(1, "Erik", "Maria", "Remark"), true));
+
+    System.out.println( bookDao().isBookExist(new Book(1, "It", "Chapter 2", "1999-12-11")));
+
   }
   /**
    * Private constructor used for Singleton implementation

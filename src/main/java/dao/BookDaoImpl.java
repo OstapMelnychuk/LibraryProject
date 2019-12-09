@@ -148,19 +148,17 @@ public class BookDaoImpl implements BookDao {
                 + "(title, book_description, date_of_publisment, count)"
                 + "VALUE (?,?,?,?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, book.getTitle());
-            preparedStatement.setString(2, book.getDescription());
-            preparedStatement.setDate(3, Date.valueOf(LocalDate.of(2019, 11, 19)));
-            preparedStatement.setInt(4, book.getCount());
-            preparedStatement.executeUpdate();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            if (isBookExist(book)) {
+                update(book, findCountOfBook(book));
+            } else {
+                preparedStatement.setString(1, book.getTitle());
+                preparedStatement.setString(2, book.getDescription());
+                preparedStatement.setString(3, book.getDateOfPublishment());
+                preparedStatement.setInt(4, book.getCount());
+                preparedStatement.executeUpdate();
 
-            try (ResultSet keys = preparedStatement.getGeneratedKeys()) {
                 AuthorDaoImpl authorDao = new AuthorDaoImpl(connection);
-
-                if (keys.next()) {
-                    book.setId(keys.getInt(1));
-                }
 
                 if (authorDao.isAuthorExist(book)) {
                     connectBookWithAuthor(book);
@@ -168,15 +166,29 @@ public class BookDaoImpl implements BookDao {
                     authorDao.save(book.getAuthor());
                     connectBookWithAuthor(book);
                 }
+
             }
+
+            addAllExemplars(book.getCount(), book);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void update(Book book) {
-        System.out.println("This method is not applicable");
+    public void update(Book book, int count) {
+        String query = "Update book set count = ? where title = ? AND book_description = ? AND date_of_publisment = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, book.getCount() + count);
+            preparedStatement.setString(2, book.getTitle());
+            preparedStatement.setString(3, book.getDescription());
+            preparedStatement.setString(4, book.getDateOfPublishment());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -184,10 +196,10 @@ public class BookDaoImpl implements BookDao {
         System.out.println("This method is not applicable");
     }
 
-    private boolean isBookExist(BookDto bookDto){
+    public boolean isBookExist(Book bookDto) {
         String query = "Select * from book where title = ? AND book_description = ? AND date_of_publisment = ?";
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, bookDto.getTitle());
             preparedStatement.setString(2, bookDto.getDescription());
             preparedStatement.setString(3, bookDto.getDateOfPublishment());
@@ -196,15 +208,11 @@ public class BookDaoImpl implements BookDao {
 
             return resultSet.next();
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-
-    private void AddBookCopy(){
-    }
-
 
     private void connectBookWithAuthor(Book book) {
         String queryAddAuthor = "INSERT INTO copy (author_id, book_id) VALUES(?,?)";
@@ -220,5 +228,61 @@ public class BookDaoImpl implements BookDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private int findCountOfBook(Book book) {
+        String query = "Select count from book where title = ? AND book_description = ? AND date_of_publisment = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, book.getTitle());
+            preparedStatement.setString(2, book.getDescription());
+            preparedStatement.setString(3, book.getDateOfPublishment());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+
+            int count = resultSet.getInt(1);
+
+            return count;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
+    private void addAllExemplars(int quantity, Book book) {
+        String query = "INSERT INTO copy_book (is_availible, book_id) VALUES(?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            for (int i = 0; i < quantity; i++) {
+                preparedStatement.setBoolean(1, true);
+                preparedStatement.setInt(2, getIdBook(book));
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getIdBook(Book book) {
+        String query = "SELECT id from book where title = ? and date_of_publisment = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, book.getTitle());
+            statement.setString(2, book.getDateOfPublishment());
+
+            ResultSet resultSet = statement.executeQuery();
+
+            resultSet.next();
+
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
