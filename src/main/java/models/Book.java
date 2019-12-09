@@ -7,6 +7,7 @@ public class Book {
   private String dateOfPublishment;
   private int count;
   private Author author;
+  private boolean isAvailable;
 
   public Book() {
   }
@@ -18,13 +19,14 @@ public class Book {
     this.dateOfPublishment = dateOfPublishment;
   }
 
-  public Book(Integer id, String title, String description, String dateOfPublishment, int count, Author author) {
+  public Book(Integer id, String title, String description, String dateOfPublishment, int count, Author author, boolean isAvailable) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.dateOfPublishment = dateOfPublishment;
     this.count = count;
     this.author = author;
+    this.isAvailable = isAvailable;
   }
 
 
@@ -74,6 +76,14 @@ public class Book {
 
   public void setAuthor(Author author) {
     this.author = author;
+  }
+
+  public boolean isAvailable() {
+    return isAvailable;
+  }
+
+  public void setAvailable(boolean available) {
+    isAvailable = available;
   }
 
   @Override

@@ -23,6 +23,7 @@ public class BookRatingMapper implements Mapper {
         String name = resultSet.getString(5);
         String secondname = resultSet.getString(6);
         String surname = resultSet.getString(7);
+        int count = resultSet.getInt(8);
         boolean isAvailable = DaoFactory.bookDao().isBookAvailable(title);
 
         BookDto book = new BookDto(title, bookDescription, dateOfPublishment, new AuthorDto(name, secondname, surname), isAvailable);

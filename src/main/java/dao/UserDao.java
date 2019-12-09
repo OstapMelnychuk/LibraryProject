@@ -4,6 +4,7 @@ import connector.DaoFactory;
 import dao.interfaces.UserDaoInterface;
 import dao.interfaces.mappers.BookMapper;
 import dao.interfaces.mappers.UserMapper;
+import dto.BookDto;
 import models.Book;
 import models.User;
 
@@ -73,7 +74,14 @@ public class UserDao implements UserDaoInterface {
         + "(id, nick_name, login, user_password, role_id, email, age, start_date) "
         + "VALUE (?, ?, ?, ?, ?, ?, ?, ?)";
       preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
+      preparedStatement.setInt(1, user.getId());
+//      preparedStatement.setString(2, user.getNickName());
+//      preparedStatement.setString(3, user.getLogin());
+//      preparedStatement.setString(4, user.getPassword());
+//      preparedStatement.setInt(5, user.getRoleId());
+//      preparedStatement.setString(6, user.getEmail());
+//      preparedStatement.setInt(7, user.getAge());
+//      preparedStatement.setDate(8, Date.valueOf(LocalDate.now()));
       preparedStatement.executeUpdate();
       return user.getId();
     }
@@ -122,7 +130,7 @@ public class UserDao implements UserDaoInterface {
     throw new SQLException("There is no row with id " + id);
   }
 
-  public List<Book> getUserBooksTaken(Integer id) throws SQLException {
+  public List<BookDto> getUserBooksTaken(Integer id) throws SQLException {
     String query = "Select * From BOOK " +
     "join copy_book on copy_book.book_id = book.id " +
     "join journal on copy_book.book_id = journal.book_id " +
@@ -131,11 +139,10 @@ public class UserDao implements UserDaoInterface {
     PreparedStatement preparedStatement = connection.prepareStatement(query);
     preparedStatement.setInt(1, id);
     ResultSet resultSet = preparedStatement.executeQuery();
-    //return new BookMapper().rowMapper(resultSet);
-    return null;
+    return new BookMapper().rowMapper(resultSet);
   }
 
-  public List<Book> getUserBooksNotReturned(Integer id) throws SQLException {
+  public List<BookDto> getUserBooksNotReturned(Integer id) throws SQLException {
     ArrayList<Book> books = new ArrayList<>();
     String query = "Select * From BOOK " +
     "join copy_book on copy_book.book_id = book.id " +
@@ -144,8 +151,7 @@ public class UserDao implements UserDaoInterface {
     PreparedStatement preparedStatement = connection.prepareStatement(query);
     preparedStatement.setInt(1, id);
     ResultSet resultSet = preparedStatement.executeQuery();
-    ///return new BookMapper().rowMapper(resultSet);
-    return null;
+    return new BookMapper().rowMapper(resultSet);
   }
 
   public double getAverageAgeOfUsersByBook(String name) throws SQLException {

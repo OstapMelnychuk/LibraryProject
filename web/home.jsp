@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="resources/css/collapse.css" type="text/css" rel="stylesheet">
     <link href="resources/css/home.css" rel="stylesheet" type="text/css">
-
 </head>
 <body>
 
