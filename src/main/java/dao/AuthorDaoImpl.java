@@ -16,6 +16,10 @@ public class AuthorDaoImpl implements AuthorDao {
     this.connection = connection;
   }
 
+  /**
+   * Method for finding all authors
+   * @return all authors in database
+   */
   @Override
   public List<AuthorDto> findAll() {
     String query = "Select * from author";
@@ -41,6 +45,11 @@ public class AuthorDaoImpl implements AuthorDao {
     }
   }
 
+  /**
+   * The method of finding the middle age of the reader, according to some author
+   * @param nameOfAuthor name of author
+   * @return avarage age of user
+   */
   @Override
   public double getAvarageAgeOfUserByAuthor(String nameOfAuthor) {
     String query = "SELECT AVG(age)\n" +
@@ -59,6 +68,10 @@ public class AuthorDaoImpl implements AuthorDao {
     }
   }
 
+  /**
+   * Method for saving a author.
+   * @param author the author you want to save
+   */
   @Override
   public void save(Author author) {
     String query = "INSERT INTO author "
@@ -79,16 +92,29 @@ public class AuthorDaoImpl implements AuthorDao {
     }
   }
 
+  /**
+   * Method for updating Author object.
+   * @param author author you want to update
+   */
   @Override
   public void update(Author author) {
     System.out.println("This method is not applicable");
   }
 
+  /**
+   * Method for deleting Author object.
+   * @param author author you want to delete
+   */
   @Override
   public void delete(Author author) {
     System.out.println("This method is not applicable");
   }
 
+  /**
+   * Method to check if a book exists
+   * @param book book
+   * @return true if book exists and false if dean't
+   */
   @Override
   public boolean isAuthorExist(Book book) {
     String query = "Select * from author where author_name = ? AND author_secondname = ? AND author_surname = ?";

@@ -7,15 +7,32 @@ public class BookDto {
   private AuthorDto author;
   private boolean isAvailable;
 
+  /**
+   * Default constructor
+   */
   public BookDto() {
   }
 
+  /**
+   * Constructor with parameters
+   * @param title title of book
+   * @param description description of book
+   * @param dateOfPublishment date of publishment of biik
+   */
   public BookDto(String title, String description, String dateOfPublishment) {
     this.title = title;
     this.description = description;
     this.dateOfPublishment = dateOfPublishment;
   }
 
+  /**
+   * Constructor with parameters
+   * @param title title of book
+   * @param description description of book
+   * @param dateOfPublishment date of publishment of biik
+   * @param author author of book
+   * @param isAvailable true if book exist and false if doesn't
+   */
   public BookDto(String title, String description, String dateOfPublishment, AuthorDto author, boolean isAvailable) {
     this.title = title;
     this.description = description;

@@ -19,6 +19,10 @@ public class BookDaoImpl implements BookDao {
         this.connection = connection;
     }
 
+    /**
+     * Method for finding all books
+     * @return all books in database
+     */
     @Override
     public List<BookDto> findAll() {
         String query = "SELECT title, book_description, date_of_publisment, author_name, author_secondname, author_surname, count  FROM book " +
@@ -37,6 +41,11 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * Method for finding all books by title
+     * @param title title of book
+     * @return all books with title
+     */
     @Override
     public List<BookDto> findAllBookByTitle(String title) {
         String query = "SELECT title, book_description, date_of_publisment, author.author_name, " +
@@ -58,6 +67,10 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * The method for finding whether there are copies of the book
+     * @return true if it exist and false if doesn't
+     */
     @Override
     public boolean isBookAvailable(String book) {
         String query = "SELECT *, count FROM book WHERE title = ? AND count != 0";
@@ -73,6 +86,11 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * Method for finding all books by author.
+     * @param nameOfAuthor name of author
+     * @return all books are written by the author
+     */
     @Override
     public List<BookDto> findAllBooksByAuthor(String nameOfAuthor) {
         String query = "SELECT title, book_description, date_of_publisment," +
@@ -93,7 +111,12 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-
+    /**
+     * Method of finding a book that came out between dates
+     * @param firstYear first year
+     * @param secondYear last year
+     * @return all books that came out between firstYear and lastYear
+     */
     @Override
     public List<BookDto> findAllBooksBetweenDate(int firstYear, int secondYear) {
         String query = "SELECT title, book_description, date_of_publisment, author_name, author_secondname, author_surname, count FROM book " +
@@ -114,16 +137,28 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * A method for finding the 10 best books.
+     * @return the 10 best book
+     */
     @Override
     public List<BookDto> getTenTheMostPopularBook() {
         return getBookRating("asc");
     }
 
+    /**
+     * A method for finding the 10 worst books.
+     * @return the 10 worst books
+     */
     @Override
     public List<BookDto> getTenTheMostUnPopularBook() {
         return getBookRating("desc");
     }
 
+    /**
+     * A method for finding the 10 worst or best books.
+     * @return the 10 worst or best books
+     */
     private List<BookDto> getBookRating(String orderBy) {
         String query = "SELECT count(journal.book_id), book.title, book.book_description, book.date_of_publisment," +
                 "author.author_name, author.author_secondname, author.author_surname, count FROM book" +
@@ -144,6 +179,10 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * Method for saving a book.
+     * @param book the book you want to keep
+     */
     @Override
     public void save(Book book) {
         String query = "INSERT INTO book "
@@ -177,6 +216,19 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * Method for updating Book object.
+     * @param book book you want to update
+     */
+    public void update(Book book) {
+        System.out.println("This method is not applicable");
+    }
+
+    /**
+     * Method for updating Book object.
+     * @param book book you want to update
+     * @param count count new copy of book
+     */
     @Override
     public void update(Book book, int count) {
         String query = "Update book set count = ? where title = ? AND book_description = ? AND date_of_publisment = ?";
@@ -193,11 +245,20 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * Method for deleting Book object.
+     * @param book book you want to delete
+     */
     @Override
     public void delete(Book book) {
         System.out.println("This method is not applicable");
     }
 
+    /**
+     * Method to check if a book exists
+     * @param book book
+     * @return true if book exists and false if dean't
+     */
     public boolean isBookExist(Book book) {
         String query = "Select * from book join copy on copy.book_id = book.id " +
                 "join author on copy.author_id = author.id " +
@@ -220,6 +281,10 @@ public class BookDaoImpl implements BookDao {
         return false;
     }
 
+    /**
+     * Method to connect a tablet book to a tablet author.
+     * @param book book
+     */
     private void connectBookWithAuthor(Book book) {
         String queryAddAuthor = "INSERT INTO copy (author_id, book_id) VALUES(?,?)";
 
@@ -236,6 +301,11 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * Method for finding the number of instances.
+     * @param book book
+     * @return count of instances
+     */
     private int findCountOfBook(Book book) {
         String query = "Select count from book where title = ? AND book_description = ? AND date_of_publisment = ?";
 
@@ -258,7 +328,11 @@ public class BookDaoImpl implements BookDao {
         return -1;
     }
 
-
+    /**
+     * Method to create all instances.
+     * @param quantity count of instances
+     * @param book the book you want to copy
+     */
     private void addAllExemplars(int quantity, Book book) {
         String query = "INSERT INTO copy_book (is_availible, book_id) VALUES(?,?)";
         try {
@@ -274,6 +348,11 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    /**
+     * Method to finding a id by book
+     * @param book book
+     * @return id of book
+     */
     private int getIdBook(Book book) {
         String query = "SELECT id from book where title = ? and date_of_publisment = ?";
 

@@ -20,7 +20,7 @@ public class HomeServlet extends HttpServlet {
         if (user != null) {
             BookService bookService = new BookService();
 
-            req.setAttribute("books", bookService.findAllBook());
+            req.setAttribute("books", bookService.findAllBooks());
             req.setAttribute("admin", ((User) req.getSession().getAttribute("user")).getRoleId());
 
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("home.jsp");
