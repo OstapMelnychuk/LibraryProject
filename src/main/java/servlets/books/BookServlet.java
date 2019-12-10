@@ -1,11 +1,6 @@
 package servlets.books;
 
-import connector.DaoFactory;
-import dao.UserDao;
-import dao.interfaces.BookDao;
-import dto.BookDto;
 import models.User;
-import service.BookService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,18 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (UserDao.currentUser != null) {
+        User user = (User) req.getSession().getAttribute("user");
+
+
+        if (user != null) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("books.jsp");
 
             req.setAttribute("isListExist", true);
-            req.setAttribute("admin", UserDao.currentUser.getRoleId());
+            req.setAttribute("admin", user.getRoleId());
 
             requestDispatcher.forward(req, resp);
         } else {

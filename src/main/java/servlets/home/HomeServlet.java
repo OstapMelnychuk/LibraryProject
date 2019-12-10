@@ -1,6 +1,6 @@
 package servlets.home;
 
-import dao.UserDao;
+import models.User;
 import service.BookService;
 
 import javax.servlet.RequestDispatcher;
@@ -15,12 +15,13 @@ import java.io.IOException;
 public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (UserDao.currentUser != null) {
+        User user = (User) req.getSession().getAttribute("user");
 
+        if (user != null) {
             BookService bookService = new BookService();
 
             req.setAttribute("books", bookService.findAllBook());
-            req.setAttribute("admin", UserDao.currentUser.getRoleId());
+            req.setAttribute("admin", ((User) req.getSession().getAttribute("user")).getRoleId());
 
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("home.jsp");
 

@@ -6,8 +6,10 @@ import dao.interfaces.mappers.BookRatingMapper;
 import dto.BookDto;
 import models.Book;
 
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class BookDaoImpl implements BookDao {
@@ -149,6 +151,7 @@ public class BookDaoImpl implements BookDao {
                 + "VALUE (?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            System.out.println(isBookExist(book));
             if (isBookExist(book)) {
                 update(book, findCountOfBook(book));
             } else {
@@ -166,7 +169,6 @@ public class BookDaoImpl implements BookDao {
                     authorDao.save(book.getAuthor());
                     connectBookWithAuthor(book);
                 }
-
             }
 
             addAllExemplars(book.getCount(), book);
@@ -196,13 +198,17 @@ public class BookDaoImpl implements BookDao {
         System.out.println("This method is not applicable");
     }
 
-    public boolean isBookExist(Book bookDto) {
-        String query = "Select * from book where title = ? AND book_description = ? AND date_of_publisment = ?";
+    public boolean isBookExist(Book book) {
+        String query = "Select * from book join copy on copy.book_id = book.id " +
+                "join author on copy.author_id = author.id " +
+                "where title = ? AND book_description = ? AND date_of_publisment = ? AND author_name = ? AND author_secondname = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, bookDto.getTitle());
-            preparedStatement.setString(2, bookDto.getDescription());
-            preparedStatement.setString(3, bookDto.getDateOfPublishment());
+            preparedStatement.setString(1, book.getTitle());
+            preparedStatement.setString(2, book.getDescription());
+            preparedStatement.setString(3, book.getDateOfPublishment());
+            preparedStatement.setString(4, book.getAuthor().getFirstname());
+            preparedStatement.setString(5, book.getAuthor().getSecondname());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

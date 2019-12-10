@@ -133,7 +133,7 @@
             <c:when test="${not empty books}">
                 <c:forEach items="${books}" var="element">
                     <li class="list-group-item d-flex justify-content-between align-items-center li_button">
-                            ${element.title}
+                            Title: ${element.title}
                         <span class="badge badge-primary badge-pill"
                               <c:if test="${not element.isAvailable()}">style="background-color: #d31444"</c:if>
                               <c:if test="${element.isAvailable()}">style="background-color: #4adf75"</c:if>>
@@ -143,7 +143,7 @@
                     <c:if test="${not element.isAvailable()}">is not available</c:if>
                 </span>
                         <div>
-                                ${element.description}
+                                Author: ${element.author.name} ${element.author.secondname}
                         </div>
                     </li>
                 </c:forEach>

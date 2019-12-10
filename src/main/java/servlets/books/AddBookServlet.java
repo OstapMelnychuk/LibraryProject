@@ -1,8 +1,8 @@
 package servlets.books;
 
-import dao.UserDao;
 import models.Author;
 import models.Book;
+import models.User;
 import service.BookService;
 
 import javax.servlet.RequestDispatcher;
@@ -18,13 +18,25 @@ public class AddBookServlet extends HttpServlet {
     public static final String NEGATIVE_COUNT = "Count can't be negative";
     public static final String SUCCESS = "Book successfully added";
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("admin", UserDao.currentUser.getRoleId());
+        User user = (User) req.getSession().getAttribute("user");
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("addBook.jsp");
-        requestDispatcher.forward(req, resp);
+        System.out.println("User is " + user);
+
+        if (user != null) {
+            if (user.getRoleId() == 1) {
+                req.setAttribute("admin", ((User) req.getSession().getAttribute("user")).getRoleId());
+
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("addBook.jsp");
+                requestDispatcher.forward(req, resp);
+            } else {
+                resp.sendRedirect("/home");
+            }
+        } else {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/login");
+            requestDispatcher.forward(req, resp);
+        }
     }
 
     @Override
@@ -48,7 +60,7 @@ public class AddBookServlet extends HttpServlet {
                 bookService.save(book);
 
                 req.setAttribute("message", SUCCESS);
-                req.setAttribute("admin", UserDao.currentUser.getRoleId());
+                req.setAttribute("admin", ((User) req.getSession().getAttribute("user")).getRoleId());
 
             } else {
                 req.setAttribute("message", NEGATIVE_COUNT);
