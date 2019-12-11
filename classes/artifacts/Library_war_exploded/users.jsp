@@ -1,4 +1,3 @@
-<%@ page import="service.UserService" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
@@ -128,21 +127,18 @@
                     </li>
                 </c:forEach>
             </c:when>
-            <c:when test= "${age > 0}">
-            <li class="list-group-item d-flex justify-content-between align-items-center li_button"> ${age} </li>
+            <c:when test="${age > 0}">
+                <li class="list-group-item d-flex justify-content-between align-items-center li_button"> ${age} </li>
             </c:when>
             <c:when test="${age <= 0}">
-                Sorry we don`t have statistic for such book
+                <h3>Sorry we don`t have statistic for such book</h3>
             </c:when>
-            <c:when test="${empty authors}">
-                Sorry there are no such users
+            <c:when test="${empty authors && authors.isEmpty()}">
+                <h3>Sorry there are no such users</h3>
             </c:when>
         </c:choose>
     </div>
-
-
 </div>
-
 </body>
 </html>
 
