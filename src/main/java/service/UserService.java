@@ -113,7 +113,7 @@ public class UserService {
 
   public List<User> getDebtors(){
     try {
-      DaoFactory.userDao().getDebtors();
+      return DaoFactory.userDao().getDebtors();
     } catch (SQLException e) {
       e.printStackTrace();
     }

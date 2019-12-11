@@ -235,12 +235,14 @@ public class UserDao implements UserDaoInterface {
     @Override
     public List<User> getDebtors() throws SQLException {
         List<User> userList = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("select users.id, users.nick_name, users.login," +
+        PreparedStatement preparedStatement = connection.prepareStatement("select users.id, users.nick_name, users.login, " +
             "users.user_password, users.role_id, users.email, users.age, users.start_date " +
-            "from users" +
-            "inner join journal on users.id = journal.user_id" +
+            "from users " +
+            "join journal on users.id = journal.user_id " +
             "where journal.date_of_input is null");
+
         ResultSet resultSet = preparedStatement.executeQuery();
+
         return new UserMapper().rowMapper(resultSet);
     }
 }
