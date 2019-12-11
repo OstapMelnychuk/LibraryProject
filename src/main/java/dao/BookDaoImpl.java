@@ -50,7 +50,7 @@ public class BookDaoImpl implements BookDao {
      * @return all books with title
      */
     @Override
-    public List<BookDto> findAllBookByTitle(String title) {
+    public List<BookDto> findAllBookByTitle(String title) throws Exception {
         String query = "SELECT title, book_description, date_of_publisment, author.author_name, " +
                 "author.author_secondname, author.author_surname, count" +
                 " FROM book " +
@@ -66,7 +66,8 @@ public class BookDaoImpl implements BookDao {
 
             return bookMapper.rowMapper(resultSet);
         } catch (SQLException e) {
-            return null;
+            e.printStackTrace();
+            throw new Exception();
         }
     }
 
@@ -194,7 +195,7 @@ public class BookDaoImpl implements BookDao {
      * @param book the book you want to keep
      */
     @Override
-    public void save(Book book) {
+    public void save(Book book) throws Exception {
         String query = "INSERT INTO book "
                 + "(title, book_description, date_of_publisment, count)"
                 + "VALUE (?,?,?,?)";
@@ -356,7 +357,7 @@ public class BookDaoImpl implements BookDao {
      * @param book book
      * @return count of instances
      */
-    private int findCountOfBook(Book book) {
+    private int findCountOfBook(Book book) throws Exception {
         String query = "Select count from book where title = ? AND book_description = ? AND date_of_publisment = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -374,8 +375,8 @@ public class BookDaoImpl implements BookDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new Exception();
         }
-        return -1;
     }
 
     /**
@@ -384,7 +385,7 @@ public class BookDaoImpl implements BookDao {
      * @param quantity count of instances
      * @param book     the book you want to copy
      */
-    private void addAllExemplars(int quantity, Book book) {
+    private void addAllExemplars(int quantity, Book book) throws Exception {
         String query = "INSERT INTO copy_book (is_availible, book_id) VALUES(?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -405,7 +406,7 @@ public class BookDaoImpl implements BookDao {
      * @param book book
      * @return id of book
      */
-    private int getIdBook(Book book) {
+    private int getIdBook(Book book) throws Exception {
         String query = "SELECT id from book where title = ? and date_of_publisment = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -419,7 +420,7 @@ public class BookDaoImpl implements BookDao {
             return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new Exception();
         }
-        return -1;
     }
 }

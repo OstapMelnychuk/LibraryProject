@@ -1,7 +1,5 @@
 package servlets.books;
 
-import connector.DaoFactory;
-import models.Book;
 import models.User;
 import service.BookService;
 
@@ -26,7 +24,11 @@ public class SearchByTitleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
 
-        req.setAttribute("books", bookService.findAllBookByTitle(req.getParameter("title")));
+        try {
+            req.setAttribute("books", bookService.findAllBookByTitle(req.getParameter("title")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         req.setAttribute("title_show", true);
         req.setAttribute("admin", user.getRoleId());
 

@@ -65,7 +65,7 @@ public class AddBookServlet extends HttpServlet {
             } else {
                 req.setAttribute("message", NEGATIVE_COUNT);
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             req.setAttribute("message", SearchBookByYearServlet.YEARS_ARE_INCORECT);
         }
 

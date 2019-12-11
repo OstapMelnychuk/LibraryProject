@@ -81,12 +81,12 @@
                             <div class="form-group mx-sm-3 mb-2 first-year">
                                 <label for="first-year" class="sr-only">First year</label>
                                 <input type="text" class="form-control" id="first-year" name="first-year"
-                                       placeholder="first year">
+                                       placeholder="first year" required>
                             </div>
-                            <div class="form-group mx-sm-3 mb-2 first-year">
+                            <div class="form-group mx-sm-3 mb-2 first-year needs-validation" novalide>
                                 <label for="last-year" class="sr-only">Last year</label>
                                 <input type="text" class="form-control" id="last-year" name="last-year"
-                                       placeholder="last year">
+                                       placeholder="last year" required>
                             </div>
                             <br>
                             <small id="emailHelp" class="form-text text-muted" style="color: deeppink"><c:if
@@ -116,7 +116,7 @@
             <div class="card">
                 <div class="card-header" id="headingFive">
                     <h5 class="mb-0">
-                        <form class="form-inline" method="post" action="/top">
+                        <form class="form-inline needs-validation" method="post" action="/top">
                             <button class="btn btn-link collapsed"
                                     data-toggle="collapse" data-target="#collapseFive"
                                     aria-expanded="false" aria-controls="collapseFive">
@@ -166,7 +166,7 @@
 
                         <c:if test="${admin == 1 && element.getClass().simpleName == 'StatisticsBookDto'}">
                             <div style="color: #6d25cc">
-                                They took this book: ${element.count}
+                                Book has been taken: ${element.count}
                                 <c:choose>
                                     <c:when test="${element.count < 2}">time</c:when>
                                     <c:when test="${element.count > 1}">times</c:when>

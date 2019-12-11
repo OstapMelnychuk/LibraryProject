@@ -1,6 +1,5 @@
 package servlets.books;
 
-import connector.DaoFactory;
 import dto.BookDto;
 import dto.StatisticsBookDto;
 import models.User;
@@ -28,7 +27,7 @@ public class StatisticOfBookServlet extends HttpServlet {
             List<BookDto> statisticsOfBooks = bookService.findAllBooks();
             List<StatisticsBookDto> statisticsBookDtos = new ArrayList<>();
 
-            for (BookDto statistic: statisticsOfBooks) {
+            for (BookDto statistic : statisticsOfBooks) {
                 System.out.println(statistic);
                 statisticsBookDtos.add(new StatisticsBookDto(statistic, bookService.getStatisticOfBook(statistic)));
 
