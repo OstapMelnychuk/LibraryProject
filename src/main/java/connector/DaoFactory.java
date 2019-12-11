@@ -27,7 +27,7 @@ public final class DaoFactory {
     //System.out.println(authorDao().isAuthorExist(new Author(1,"Anton", "Meme", "LOLs")));
 
 
-    System.out.println( bookDao().isBookExist(new Book(1, "Sunset", "The book about Sunset", "1999-11-22")));
+    System.out.println( bookDao().isBookExist(new Book(1, "It", "Chapter 2", "1999-12-11")));
 
   }
   /**

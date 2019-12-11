@@ -13,6 +13,5 @@ public interface UserDaoInterface {
   void deleteUserByLogin(String login) throws SQLException;
   int createUser(User user) throws SQLException;
   void updateUserById(Integer id, User user) throws SQLException;
-  List <User> getDebtors()throws SQLException;
-  List <User> getUserByName(String name)throws SQLException;
+  List<User> getDebtors() throws SQLException;
 }

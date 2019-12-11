@@ -23,10 +23,10 @@
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <form class="form-inline" method="post" action="/userStatistic">
+                        <form class="form-inline" method="post" action="/search-author">
                             <div class="form-group mx-sm-3 mb-2">
-                                <label for="user name" class="sr-only">User's name</label>
-                                <input type="text" class="form-control" id="user name" name="user"
+                                <label for="authors name" class="sr-only">Author's name</label>
+                                <input type="text" class="form-control" id="authors name" name="author"
                                        placeholder="name">
                             </div>
                             <button type="submit" class="btn btn-primary mb-2">Search</button>
@@ -41,7 +41,7 @@
                     <h5 class="mb-0">
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
                                 aria-expanded="false" aria-controls="collapseTwo">
-                            Search by title AVG user info
+                            Search by little AVG user info
                         </button>
                     </h5>
                 </div>
@@ -64,7 +64,7 @@
                     <h5 class="mb-0">
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
                                 aria-expanded="false" aria-controls="collapseThree">
-                            Search by author AVG user info
+                            Search by author ABG user info
                         </button>
                     </h5>
                 </div>
@@ -85,7 +85,7 @@
             <div class="card">
                 <div class="card-header" id="headingFour">
                     <h5 class="mb-0">
-                        <form class="form-inline" method="post" action="/debtors">
+                        <form class="form-inline" method="post" action="/back-top">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
                                     aria-expanded="false" aria-controls="collapseFour">
                                 List of debtors
@@ -109,12 +109,11 @@
                     </h5>
                 </div>
             </div>
-
         </div>
     </div>
 
     <div class="for">
-        <c:forEach items="${users}" var="element">
+        <c:forEach items="${books}" var="element">
             <li class="list-group-item d-flex justify-content-between align-items-center li_button">
                     ${element.title}
                 <span class="badge badge-primary badge-pill">${element.dateOfPublishment}</span>

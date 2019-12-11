@@ -234,28 +234,13 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public List<User> getDebtors() throws SQLException {
-        List<User> users = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("Select * From USERS");
+        List<User> userList = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement("select users.id, users.nick_name, users.login," +
+            "users.user_password, users.role_id, users.email, users.age, users.start_date " +
+            "from users" +
+            "inner join journal on users.id = journal.user_id" +
+            "where journal.date_of_input is null");
         ResultSet resultSet = preparedStatement.executeQuery();
         return new UserMapper().rowMapper(resultSet);
-
-    }
-
-    @Override
-    public List<User> getUserByName(String name) throws SQLException {
-        String query = "SELECT * FROM users " +
-            "Where nick_name like ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, "%" + name + "%");
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            UserMapper userMapper = new UserMapper();
-
-            return userMapper.rowMapper(resultSet);
-        } catch (SQLException e) {
-            return null;
-        }
-
     }
 }
