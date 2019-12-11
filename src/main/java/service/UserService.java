@@ -120,7 +120,12 @@ public class UserService {
     return null;
   }
 
-  public int getIdByName(String name) throws SQLException {
-    return DaoFactory.userDao().getIdByName(name);
+  public User getUserByName(String name) {
+    try {
+      return DaoFactory.userDao().getUserByName(name);
+    }catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }

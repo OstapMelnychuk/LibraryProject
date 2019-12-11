@@ -21,12 +21,12 @@
                         </button>
                     </h5>
                 </div>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div id="collapseOne" class="collapse <c:if test="${name_show}">in</c:if>" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <form class="form-inline" method="post" action="/search-author">
+                        <form class="form-inline" method="post" action="/user-requests">
                             <div class="form-group mx-sm-3 mb-2">
-                                <label for="authors name" class="sr-only">Author's name</label>
-                                <input type="text" class="form-control" id="authors name" name="author"
+                                <label for="user name" class="sr-only">User's name</label>
+                                <input type="text" class="form-control" id="user name" name="nick_name"
                                        placeholder="name">
                             </div>
                             <button type="submit" class="btn btn-primary mb-2">Search</button>

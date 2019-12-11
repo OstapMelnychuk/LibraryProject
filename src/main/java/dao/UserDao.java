@@ -246,15 +246,20 @@ public class UserDao implements UserDaoInterface {
         return new UserMapper().rowMapper(resultSet);
     }
 
-  public int getIdByName(String name) throws SQLException {
-    try {
-      PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM Users WHERE nick_name like " + name);
+  public User getUserByName(String name) throws SQLException {
+      String query = "SELECT * FROM Users WHERE nick_name like ?";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+      preparedStatement.setString(1, name);
       ResultSet resultSet = preparedStatement.executeQuery();
-      return resultSet.getInt(String.valueOf(preparedStatement));
-    }catch (SQLException e) {
-      e.printStackTrace();
+
+      User user = new UserMapper().rowMapper(resultSet).get(0);
+
+      return user;
+    } catch (SQLException e) {
+      return null;
+    } catch (IndexOutOfBoundsException e) {
+      return null;
     }
-    return 0;
 
   }
 }
