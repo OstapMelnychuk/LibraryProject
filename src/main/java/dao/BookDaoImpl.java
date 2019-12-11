@@ -4,7 +4,7 @@ import dao.interfaces.BookDao;
 import dao.interfaces.mappers.BookMapper;
 import dao.interfaces.mappers.BookRatingMapper;
 import dto.BookDto;
-import dto.StatisticsBookDto;
+//import dto.StatisticsBookDto;
 import models.Book;
 
 import java.sql.Connection;
@@ -56,7 +56,7 @@ public class BookDaoImpl implements BookDao {
                 " FROM book " +
                 "join copy on copy.book_id = book.id" +
                 " join author on copy.author_id = author.id " +
-                "Where title  like ?";
+                "Where title  like ? group by title";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, "%" + title + "%");
@@ -296,38 +296,38 @@ public class BookDaoImpl implements BookDao {
     }
 
 
-    public StatisticsBookDto getStatisticOfBook(BookDto book) {
-        String query = "SELECT count(title), AVG(date_of_input-date_of_output) from book " +
-                "join copy_book on book.id = copy_book.book_id " +
-                "join journal on copy_book.id = journal.book_id where title = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, book.getTitle());
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            resultSet.next();
-
-            int count = resultSet.getInt(1);
-            String first_date = resultSet.getString(2);
-
-            int mounth = 0;
-            int day = 0;
-
-            try {
-                mounth = (int) Double.parseDouble(first_date) / 100;
-                day = (int) Double.parseDouble(first_date) % 100;
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-
-            return new StatisticsBookDto("Average reading time: month: " + mounth + " day: " + day, count);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public StatisticsBookDto getStatisticOfBook(BookDto book) {
+//        String query = "SELECT count(title), AVG(date_of_input-date_of_output) from book " +
+//                "join copy_book on book.id = copy_book.book_id " +
+//                "join journal on copy_book.id = journal.book_id where title = ?";
+//
+//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+//            preparedStatement.setString(1, book.getTitle());
+//
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            resultSet.next();
+//
+//            int count = resultSet.getInt(1);
+//            String first_date = resultSet.getString(2);
+//
+//            int mounth = 0;
+//            int day = 0;
+//
+//            try {
+//                mounth = (int) Double.parseDouble(first_date) / 100;
+//                day = (int) Double.parseDouble(first_date) % 100;
+//            } catch (NullPointerException e) {
+//                e.printStackTrace();
+//            }
+//
+//            return new StatisticsBookDto("Average reading time: month: " + mounth + " day: " + day, count);
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     /**
      * Method to connect a tablet book to a tablet author.

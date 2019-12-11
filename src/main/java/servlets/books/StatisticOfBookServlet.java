@@ -2,7 +2,7 @@ package servlets.books;
 
 import connector.DaoFactory;
 import dto.BookDto;
-import dto.StatisticsBookDto;
+//import dto.StatisticsBookDto;
 import models.User;
 import service.BookService;
 
@@ -20,29 +20,29 @@ import java.util.List;
 public class StatisticOfBookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-
-        if (user != null) {
-            BookService bookService = new BookService();
-
-            List<BookDto> statisticsOfBooks = bookService.findAllBooks();
-            List<StatisticsBookDto> statisticsBookDtos = new ArrayList<>();
-
-            for (BookDto statistic: statisticsOfBooks) {
-                System.out.println(statistic);
-                statisticsBookDtos.add(new StatisticsBookDto(statistic, bookService.getStatisticOfBook(statistic)));
-
-            }
-
-            req.setAttribute("books", statisticsBookDtos);
-            req.setAttribute("admin", ((User) req.getSession().getAttribute("user")).getRoleId());
-
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("books.jsp");
-
-            requestDispatcher.forward(req, resp);
-        } else {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/login");
-            requestDispatcher.forward(req, resp);
-        }
+//        User user = (User) req.getSession().getAttribute("user");
+//
+//        if (user != null) {
+//            BookService bookService = new BookService();
+//
+//            List<BookDto> statisticsOfBooks = bookService.findAllBooks();
+//            List<StatisticsBookDto> statisticsBookDtos = new ArrayList<>();
+//
+//            for (BookDto statistic: statisticsOfBooks) {
+//                System.out.println(statistic);
+//                statisticsBookDtos.add(new StatisticsBookDto(statistic, bookService.getStatisticOfBook(statistic)));
+//
+//            }
+//
+//            req.setAttribute("books", statisticsBookDtos);
+//            req.setAttribute("admin", ((User) req.getSession().getAttribute("user")).getRoleId());
+//
+//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("books.jsp");
+//
+//            requestDispatcher.forward(req, resp);
+//        } else {
+//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/login");
+//            requestDispatcher.forward(req, resp);
+//        }
     }
 }

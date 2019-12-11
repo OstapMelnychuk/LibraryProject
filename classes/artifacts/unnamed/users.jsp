@@ -1,4 +1,3 @@
-<%@ page import="service.UserService" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
@@ -8,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navbar.jsp" />
 
 <div class="relate">
     <div class="left-collapse">
@@ -24,7 +23,7 @@
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <form class="form-inline" method="post" action="/search-author-name">
+                        <form class="form-inline" method="post" action="/search-author-age">
                             <div class="form-group mx-sm-3 mb-2">
                                 <label for="authors-name" class="sr-only">Author's name</label>
                                 <input type="text" class="form-control" id="authors-name" name="author"
@@ -42,13 +41,13 @@
                     <h5 class="mb-0">
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
                                 aria-expanded="false" aria-controls="collapseTwo">
-                            Get average user age by book title
+                            Search by little AVG user info
                         </button>
                     </h5>
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        <form class="form-inline" method="post" action="/search-title-age">
+                        <form class="form-inline" method="post" action="/search-title">
                             <div class="form-group mx-sm-3 mb-2">
                                 <label for="title" class="sr-only">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="title">
@@ -59,28 +58,23 @@
                 </div>
             </div>
 
+
             <div class="card">
                 <div class="card-header" id="headingThree">
                     <h5 class="mb-0">
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
                                 aria-expanded="false" aria-controls="collapseThree">
-                            Search by author AVG user info
+                            Search by author ABG user info
                         </button>
                     </h5>
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        <form class="form-inline" method="post" action="/search-author-age">
+                        <form class="form-inline" method="post" action="/search-year">
                             <div class="form-group mx-sm-3 mb-2 first-year">
-                                <label for="author-name" class="sr-only">Title</label>
-                                <input type="text" class="form-control" id="author-name" name="author-name"
-                                       placeholder="author-name">
-                                <label for="author-secondname" class="sr-only">Title</label>
-                                <input type="text" class="form-control" id="author-secondname" name="author-secondname"
-                                       placeholder="author-secondname">
-                                <label for="author-surname" class="sr-only">Title</label>
-                                <input type="text" class="form-control" id="author-surname" name="author-surname"
-                                       placeholder="author-surname">
+                                <label for="first-year" class="sr-only">Title</label>
+                                <input type="text" class="form-control" id="first-year" name="first-year"
+                                       placeholder="first year">
                             </div>
                             <button type="submit" class="btn btn-primary mb-2 year-button">Search</button>
                         </form>
@@ -119,27 +113,16 @@
     </div>
 
     <div class="for">
-        <c:choose>
-            <c:when test="${not empty authors}">
-                <c:forEach items="${authors}" var="element">
-                    <li class="list-group-item d-flex justify-content-between align-items-center li_button">
-                            ${element.login}
-                            ${element.email}
-                    </li>
-                </c:forEach>
-            </c:when>
-            <c:when test= "${age > 0}">
-            <li class="list-group-item d-flex justify-content-between align-items-center li_button"> ${age} </li>
-            </c:when>
-            <c:when test="${age <= 0}">
-                Sorry we don`t have statistic for such book
-            </c:when>
-            <c:when test="${empty authors}">
-                Sorry there are no such users
-            </c:when>
-        </c:choose>
+        <c:forEach items="${books}" var="element">
+            <li class="list-group-item d-flex justify-content-between align-items-center li_button">
+                    ${element.title}
+                <span class="badge badge-primary badge-pill">${element.dateOfPublishment}</span>
+                <div>
+                        ${element.description}
+                </div>
+            </li>
+        </c:forEach>
     </div>
-
 
 </div>
 
