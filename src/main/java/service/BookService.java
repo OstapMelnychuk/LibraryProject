@@ -2,6 +2,7 @@ package service;
 
 import connector.DaoFactory;
 import dto.BookDto;
+import dto.StatisticsBookDto;
 import models.Book;
 
 import java.util.ArrayList;
@@ -111,6 +112,9 @@ public class BookService {
     } else {
       return false;
     }
+  }
 
+  public StatisticsBookDto getStatisticOfBook(BookDto book){
+    return DaoFactory.bookDao().getStatisticOfBook(book);
   }
 }

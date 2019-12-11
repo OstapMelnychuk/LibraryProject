@@ -26,7 +26,8 @@
                     </h5>
                 </div>
 
-                <div id="collapseOne" class="collapse <c:if test="${author_show}">in</c:if>" aria-labelledby="headingOne" data-parent="#accordion">
+                <div id="collapseOne" class="collapse <c:if test="${author_show}">in</c:if>"
+                     aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body cart">
                         <form class="form-inline" method="post" action="/search-author">
                             <div class="form-group mx-sm-3 mb-2">
@@ -50,7 +51,8 @@
                         </button>
                     </h5>
                 </div>
-                <div id="collapseTwo" class="collapse <c:if test="${title_show}">in</c:if>" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div id="collapseTwo" class="collapse <c:if test="${title_show}">in</c:if>" aria-labelledby="headingTwo"
+                     data-parent="#accordion">
                     <div class="card-body">
                         <form class="form-inline" method="post" action="/search-title">
                             <div class="form-group mx-sm-3 mb-2">
@@ -63,7 +65,6 @@
                 </div>
             </div>
 
-
             <div class="card">
                 <div class="card-header" id="headingThree">
                     <h5 class="mb-0">
@@ -73,7 +74,8 @@
                         </button>
                     </h5>
                 </div>
-                <div id="collapseThree" class="collapse <c:if test="${year_show}">in</c:if>" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div id="collapseThree" class="collapse <c:if test="${year_show}">in</c:if>"
+                     aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
                         <form class="form-inline" method="post" action="/search-year">
                             <div class="form-group mx-sm-3 mb-2 first-year">
@@ -125,6 +127,24 @@
                     </h5>
                 </div>
             </div>
+
+            <c:if test="${admin == 1}">
+
+                <div class="card">
+                    <div class="card-header" id="headingStatistic">
+                        <h5 class="mb-0">
+                            <form class="form-inline" method="post" action="/statistic">
+                                <button class="btn btn-link collapsed"
+                                        data-toggle="collapse" data-target="#collapseStatistik"
+                                        aria-expanded="false" aria-controls="collapseStatistik">
+                                    Statistic
+                                </button>
+                            </form>
+
+                        </h5>
+                    </div>
+                </div>
+            </c:if>
         </div>
     </div>
     <div class="for">
@@ -133,18 +153,29 @@
             <c:when test="${not empty books}">
                 <c:forEach items="${books}" var="element">
                     <li class="list-group-item d-flex justify-content-between align-items-center li_button">
-                            Title: ${element.title}
+                        Title: ${element.title}
                         <span class="badge badge-primary badge-pill"
-                              <c:if test="${not element.isAvailable()}">style="background-color: #d31444"</c:if>
-                              <c:if test="${element.isAvailable()}">style="background-color: #4adf75"</c:if>>
+                              <c:if test="${not element.isAvailable()}">style="background-color: #d31444"</c:if> <c:if test="${element.isAvailable()}">style="background-color: #4adf75"</c:if>>
 
-                    <c:if test="${element.isAvailable()}"> is available</c:if>
+                              <c:if test="${element.isAvailable()}"> is available</c:if> <c:if test="${not element.isAvailable()}">is not available</c:if>
+                         </span>
 
-                    <c:if test="${not element.isAvailable()}">is not available</c:if>
-                </span>
                         <div>
-                                Author: ${element.author.name} ${element.author.secondname}
+                            Author: ${element.author.name} ${element.author.secondname}
                         </div>
+
+                        <c:if test="${admin == 1 && element.getClass().simpleName == 'StatisticsBookDto'}">
+                            <div style="color: #6d25cc">
+                                They took this book: ${element.count}
+                                <c:choose>
+                                    <c:when test="${element.count < 2}">time</c:when>
+                                    <c:when test="${element.count > 1}">times</c:when>
+                                </c:choose>
+                            </div>
+                            <div style="color: #6d25cc">
+                                <p>${element.date}</p>
+                            </div>
+                        </c:if>
                     </li>
                 </c:forEach>
             </c:when>

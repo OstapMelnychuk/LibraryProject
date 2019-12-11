@@ -1,5 +1,7 @@
 package servlets.books;
 
+import connector.DaoFactory;
+import models.Book;
 import models.User;
 import service.BookService;
 
@@ -27,7 +29,6 @@ public class SearchByTitleServlet extends HttpServlet {
         req.setAttribute("books", bookService.findAllBookByTitle(req.getParameter("title")));
         req.setAttribute("title_show", true);
         req.setAttribute("admin", user.getRoleId());
-
 
         req.getRequestDispatcher("/books.jsp").include(req, resp);
     }

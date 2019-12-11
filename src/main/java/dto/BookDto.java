@@ -25,6 +25,15 @@ public class BookDto {
     this.dateOfPublishment = dateOfPublishment;
   }
 
+  public BookDto(BookDto bookDto){
+    this.title = bookDto.title;
+    this.description = bookDto.description;
+    this.dateOfPublishment = bookDto.dateOfPublishment;
+    this.author = bookDto.author;
+    this.isAvailable =  bookDto.isAvailable;
+
+  }
+
   /**
    * Constructor with parameters
    * @param title title of book

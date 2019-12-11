@@ -1,9 +1,9 @@
 package dao.interfaces;
 
 import dto.BookDto;
+import dto.StatisticsBookDto;
 import models.Book;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface BookDao {

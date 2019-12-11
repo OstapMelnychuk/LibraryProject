@@ -4,6 +4,7 @@ import dao.interfaces.BookDao;
 import dao.interfaces.mappers.BookMapper;
 import dao.interfaces.mappers.BookRatingMapper;
 import dto.BookDto;
+import dto.StatisticsBookDto;
 import models.Book;
 
 import java.sql.Connection;
@@ -21,6 +22,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method for finding all books
+     *
      * @return all books in database
      */
     @Override
@@ -43,6 +45,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method for finding all books by title
+     *
      * @param title title of book
      * @return all books with title
      */
@@ -69,6 +72,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * The method for finding whether there are copies of the book
+     *
      * @return true if it exist and false if doesn't
      */
     @Override
@@ -88,6 +92,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method for finding all books by author.
+     *
      * @param nameOfAuthor name of author
      * @return all books are written by the author
      */
@@ -113,7 +118,8 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method of finding a book that came out between dates
-     * @param firstYear first year
+     *
+     * @param firstYear  first year
      * @param secondYear last year
      * @return all books that came out between firstYear and lastYear
      */
@@ -139,6 +145,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * A method for finding the 10 best books.
+     *
      * @return the 10 best book
      */
     @Override
@@ -148,6 +155,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * A method for finding the 10 worst books.
+     *
      * @return the 10 worst books
      */
     @Override
@@ -157,6 +165,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * A method for finding the 10 worst or best books.
+     *
      * @return the 10 worst or best books
      */
     private List<BookDto> getBookRating(String orderBy) {
@@ -181,6 +190,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method for saving a book.
+     *
      * @param book the book you want to keep
      */
     @Override
@@ -218,6 +228,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method for updating Book object.
+     *
      * @param book book you want to update
      */
     public void update(Book book) {
@@ -226,7 +237,8 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method for updating Book object.
-     * @param book book you want to update
+     *
+     * @param book  book you want to update
      * @param count count new copy of book
      */
     @Override
@@ -247,6 +259,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method for deleting Book object.
+     *
      * @param book book you want to delete
      */
     @Override
@@ -256,6 +269,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method to check if a book exists
+     *
      * @param book book
      * @return true if book exists and false if dean't
      */
@@ -281,8 +295,43 @@ public class BookDaoImpl implements BookDao {
         return false;
     }
 
+
+    public StatisticsBookDto getStatisticOfBook(BookDto book) {
+        String query = "SELECT count(title), AVG(date_of_input-date_of_output) from book " +
+                "join copy_book on book.id = copy_book.book_id " +
+                "join journal on copy_book.id = journal.book_id where title = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, book.getTitle());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+
+            int count = resultSet.getInt(1);
+            String first_date = resultSet.getString(2);
+
+            int mounth = 0;
+            int day = 0;
+
+            try {
+                mounth = (int) Double.parseDouble(first_date) / 100;
+                day = (int) Double.parseDouble(first_date) % 100;
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+
+            return new StatisticsBookDto("Average reading time: month: " + mounth + " day: " + day, count);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Method to connect a tablet book to a tablet author.
+     *
      * @param book book
      */
     private void connectBookWithAuthor(Book book) {
@@ -303,6 +352,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method for finding the number of instances.
+     *
      * @param book book
      * @return count of instances
      */
@@ -330,8 +380,9 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method to create all instances.
+     *
      * @param quantity count of instances
-     * @param book the book you want to copy
+     * @param book     the book you want to copy
      */
     private void addAllExemplars(int quantity, Book book) {
         String query = "INSERT INTO copy_book (is_availible, book_id) VALUES(?,?)";
@@ -350,6 +401,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method to finding a id by book
+     *
      * @param book book
      * @return id of book
      */

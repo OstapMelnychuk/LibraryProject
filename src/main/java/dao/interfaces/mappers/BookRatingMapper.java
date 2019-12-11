@@ -30,8 +30,6 @@ public class BookRatingMapper implements Mapper {
 
         bookList.add(book);
       }
-
-
       return bookList;
     } catch (SQLException e) {
       e.printStackTrace();
