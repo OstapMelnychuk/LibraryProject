@@ -119,4 +119,8 @@ public class UserService {
     }
     return null;
   }
+
+  public int getIdByName(String name) throws SQLException {
+    return DaoFactory.userDao().getIdByName(name);
+  }
 }
