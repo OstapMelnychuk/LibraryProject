@@ -3,7 +3,6 @@ package dao.interfaces;
 import dto.BookDto;
 import models.Book;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface BookDao {
@@ -17,4 +16,5 @@ public interface BookDao {
   void save(Book book);
   void update(Book book, int count);
   void delete(Book book);
+  List<BookDto> getCopiesByTitle(String title);
 }

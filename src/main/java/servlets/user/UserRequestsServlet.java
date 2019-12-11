@@ -29,6 +29,9 @@ public class UserRequestsServlet extends HttpServlet {
     req.setAttribute("users", userService.getUserByName(req.getParameter("name")));
     req.setAttribute("name_show", true);
 
+    //getUserBooksTaken(Integer id)
+    //getUserBooksNotReturned(Integer id)
+    //getUserTimeFromStart(Integer id)
 
     req.getRequestDispatcher("/users.jsp").include(req, resp);
   }

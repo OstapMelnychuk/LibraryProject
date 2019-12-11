@@ -58,4 +58,9 @@ public class BookService {
     }
 
   }
+
+  public List<BookDto> getCopiesByTitle(String title) {
+    return DaoFactory.bookDao().getCopiesByTitle(title);
+  }
+
 }

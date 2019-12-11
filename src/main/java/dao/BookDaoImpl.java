@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoImpl implements BookDao {
@@ -291,4 +292,27 @@ public class BookDaoImpl implements BookDao {
         }
         return -1;
     }
+
+  @Override
+  public List<BookDto> getCopiesByTitle(String title) {
+    String query = "SELECT book.title, book.book_description, book.date_of_publisment, " +
+        "author.author_name, author.author_secondname, copy_book.is_availible " +
+        "FROM book " +
+        "join copy on book.id = copy.book_id " +
+        "join author on copy.author_id = author.id " +
+        "join copy_book on book.id = copy_book.book_id " +
+        "Where book.title  like ?";
+
+    List<Book> book = new ArrayList<>();
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+      preparedStatement.setString(1, "%" + title + "%");
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      BookMapper bookMapper = new BookMapper();
+
+      return bookMapper.rowMapper(resultSet);
+    } catch (SQLException e) {
+      return null;
+    }
+  }
 }

@@ -249,7 +249,7 @@ public class UserDao implements UserDaoInterface {
   public User getUserByName(String name) throws SQLException {
       String query = "SELECT * FROM Users WHERE nick_name like ?";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
-      preparedStatement.setString(1, name);
+      preparedStatement.setString(1,"%" + name + "%");
       ResultSet resultSet = preparedStatement.executeQuery();
 
       User user = new UserMapper().rowMapper(resultSet).get(0);

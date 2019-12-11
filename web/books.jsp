@@ -128,6 +128,30 @@
                     </h5>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header" id="headingSix">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix"
+                                aria-expanded="false" aria-controls="collapseSix">
+                            Search Copies by Title
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSix" class="collapse <c:if test="${title_show2}">in</c:if>" aria-labelledby="headingSix"
+                     data-parent="#accordion">
+                    <div class="card-body">
+                        <form class="form-inline" method="post" action="/search-copies-title">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="book_title" class="sr-only">Title</label>
+                                <input type="text" class="form-control" id="book_title" name="book_title" placeholder="book_title">
+                            </div>
+                            <button id="home" type="submit" class="btn btn-primary mb-2">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="for">
