@@ -7,6 +7,7 @@ import models.User;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserService {
   public List<User> readUserById(Integer id){
@@ -110,4 +111,23 @@ public class UserService {
   public void logIn(String login, String password){
     DaoFactory.userDao().logIn(login, password);
   }
+
+  public List<User> getDebtors(){
+    try {
+      return DaoFactory.userDao().getDebtors().stream().collect(Collectors.toList());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  public List <User> getUserByName(String name){
+    try {
+      return DaoFactory.userDao().getUserByName(name);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
 }
