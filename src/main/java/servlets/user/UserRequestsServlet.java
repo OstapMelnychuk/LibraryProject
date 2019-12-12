@@ -1,5 +1,6 @@
 package servlets.user;
 
+import models.Book;
 import models.User;
 import service.UserService;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/user-requests")
 public class UserRequestsServlet extends HttpServlet {
@@ -25,6 +27,7 @@ public class UserRequestsServlet extends HttpServlet {
     User currentUser = (User) req.getSession().getAttribute("user");
     User user = userService.getUserByName(req.getParameter("name"));
 
+
     req.setAttribute("name_show", true);
     req.setAttribute("admin", currentUser.getRoleId());
 
@@ -32,12 +35,9 @@ public class UserRequestsServlet extends HttpServlet {
 
     System.out.println(user);
 
-      req.setAttribute("long", userService.getUserTimeFromStart(user.getId()));
-      System.out.println(userService.getUserTimeFromStart(user.getId()));
-      req.setAttribute("book", userService.getUserBooksTaken(user.getId()));
-      System.out.println(userService.getUserBooksTaken(user.getId()));
-      req.setAttribute("book", userService.getUserBooksNotReturned(user.getId()));
-      System.out.println(userService.getUserBooksNotReturned(user.getId()));
+      req.setAttribute("time", userService.getUserTimeFromStart(user.getId()));
+      req.setAttribute("book1", userService.getUserBooksTaken(user.getId()));
+      req.setAttribute("book2", userService.getUserBooksNotReturned(user.getId()));
 
     req.getRequestDispatcher("/users.jsp").include(req, resp);
   }

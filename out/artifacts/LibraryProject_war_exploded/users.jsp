@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<jsp:include page="navbar.jsp" />
+<jsp:include page="navbar.jsp"/>
 
 <div class="relate">
     <div class="left-collapse">
@@ -21,7 +21,8 @@
                         </button>
                     </h5>
                 </div>
-                <div id="collapseOne" class="collapse <c:if test="${name_show}">in</c:if>" aria-labelledby="headingOne" data-parent="#accordion">
+                <div id="collapseOne" class="collapse <c:if test="${name_show}">in</c:if>" aria-labelledby="headingOne"
+                     data-parent="#accordion">
                     <div class="card-body">
                         <form class="form-inline" method="post" action="/user-requests">
                             <div class="form-group mx-sm-3 mb-2">
@@ -112,31 +113,55 @@
         </div>
     </div>
 
-    <div>
-        <c:if test="${not empty userh}">
-            <li class="list-group-item d-flex justify-content-between align-items-center li_button">
-                    ${userh.nickName}
-                <span class="badge badge-primary badge-pill">${userh.login}</span>
+
+    <c:if test="${not empty userh}">
+    <li class="list-group-item d-flex justify-content-between align-items-center li_button">
+            ${userh.nickName}
+        <span class="badge badge-primary badge-pill">${userh.login}</span>
+        <div>
+                ${userh.email} ${userh.startDay}
+        </div>
+            ${time}
+
+        <div class="for">
+            <c:forEach items="${book1}" var="element">
+                 <li class="list-group-item d-flex justify-content-between align-items-center li_button">
+                 ${element.title}
                 <div>
-                        ${userh.email} ${userh.startDay}
+                ${element.author.name} ${element.author.secondname}
                 </div>
 
-            </li>
-        </c:if>
-    </div>
+                </li>
+                </c:forEach>
+</div>
+<div class="for">
+    <c:forEach items="${book2}" var="element">
+        <li class="list-group-item d-flex justify-content-between align-items-center li_button">
+                ${element.title}
+            <div>
+                    ${element.author.name} ${element.author.secondname}
+            </div>
 
-    <div class="for">
-        <c:forEach items="${users}" var="element">
-            <li class="list-group-item d-flex justify-content-between align-items-center li_button">
-                 ${element.nickName}
-                <span class="badge badge-primary badge-pill">${element.login}</span>
-                <div>
-                        ${element.email} ${element.startDay}
-                </div>
+        </li>
+    </c:forEach>
+</div>
+</li>
 
-            </li>
-        </c:forEach>
-    </div>
+</c:if>
+
+
+<div class="for">
+    <c:forEach items="${users}" var="element">
+        <li class="list-group-item d-flex justify-content-between align-items-center li_button">
+                ${element.nickName}
+            <span class="badge badge-primary badge-pill">${element.login}</span>
+            <div>
+                    ${element.email} ${element.startDay}
+            </div>
+
+        </li>
+    </c:forEach>
+</div>
 
 </div>
 
