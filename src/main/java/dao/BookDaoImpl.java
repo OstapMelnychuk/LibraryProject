@@ -6,6 +6,7 @@ import dao.interfaces.mappers.BookRatingMapper;
 import dto.BookDto;
 import dto.StatisticsBookDto;
 import models.Book;
+import service.AuthorService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,6 +44,7 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+
     /**
      * Method for finding all books by title
      *
@@ -56,7 +58,7 @@ public class BookDaoImpl implements BookDao {
                 " FROM book " +
                 "join copy on copy.book_id = book.id" +
                 " join author on copy.author_id = author.id " +
-                "Where title  like ?";
+                "Where title  like ? group by title";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, "%" + title + "%");
@@ -211,12 +213,12 @@ public class BookDaoImpl implements BookDao {
                 preparedStatement.setInt(4, book.getCount());
                 preparedStatement.executeUpdate();
 
-                AuthorDaoImpl authorDao = new AuthorDaoImpl(connection);
+                AuthorService authorService = new AuthorService();
 
-                if (authorDao.isAuthorExist(book)) {
+                if (authorService.isAuthorExist(book)) {
                     connectBookWithAuthor(book);
                 } else {
-                    authorDao.save(book.getAuthor());
+                    authorService.create(book.getAuthor());
                     connectBookWithAuthor(book);
                 }
             }
@@ -339,6 +341,7 @@ public class BookDaoImpl implements BookDao {
         String queryAddAuthor = "INSERT INTO copy (author_id, book_id) VALUES(?,?)";
 
         try (PreparedStatement statement = connection.prepareStatement(queryAddAuthor)) {
+            book.setId(findIdBookByTitle(book));
 
             System.out.println(book.getAuthor().getId() + " " + book.getId());
 
@@ -347,6 +350,8 @@ public class BookDaoImpl implements BookDao {
 
             statement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -364,6 +369,8 @@ public class BookDaoImpl implements BookDao {
             preparedStatement.setString(1, book.getTitle());
             preparedStatement.setString(2, book.getDescription());
             preparedStatement.setString(3, book.getDateOfPublishment());
+
+            System.out.println(book.getTitle() + " " + book.getDescription() + " " + book.getDateOfPublishment());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -423,4 +430,32 @@ public class BookDaoImpl implements BookDao {
             throw new Exception();
         }
     }
+
+    /**
+     * Method for finding id books by title
+     *
+     * @param book title of book
+     * @return all books with title
+     */
+    public int findIdBookByTitle(Book book) throws Exception {
+        String query = "SELECT book.id " +
+                " FROM book " +
+                "Where title  = ? and book_description = ?  and date_of_publisment = ? ";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, book.getTitle());
+            preparedStatement.setString(2, book.getDescription());
+            preparedStatement.setString(3, book.getDateOfPublishment());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet.next();
+
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception();
+        }
+    }
+
 }

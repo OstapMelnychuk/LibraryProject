@@ -17,10 +17,13 @@ import java.io.IOException;
 public class AddBookServlet extends HttpServlet {
     public static final String NEGATIVE_COUNT = "Count can't be negative";
     public static final String SUCCESS = "Book successfully added";
+    public static final String NOT_NUMBER = "Quantity is not a number";
+
+    User user;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
+        user = (User) req.getSession().getAttribute("user");
 
         System.out.println("User is " + user);
 
@@ -41,10 +44,12 @@ public class AddBookServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("admin", user.getRoleId());
+
         try {
             int count = Integer.parseInt(req.getParameter("quantity"));
 
-            if (count > 0) {
+            if (count >= 0) {
                 String authorName = req.getParameter("name");
                 String authorSecondname = req.getParameter("secondname");
                 String authorSurname = req.getParameter("surname");
@@ -57,16 +62,19 @@ public class AddBookServlet extends HttpServlet {
 
                 Book book = new Book(1, title, description, date, count, new Author(1, authorName, authorSecondname, authorSurname), true);
 
-                bookService.save(book);
+                try {
+                    bookService.save(book);
+                } catch (Exception e) {
+
+                }
 
                 req.setAttribute("message", SUCCESS);
-                req.setAttribute("admin", ((User) req.getSession().getAttribute("user")).getRoleId());
 
             } else {
                 req.setAttribute("message", NEGATIVE_COUNT);
             }
-        } catch (Exception e) {
-            req.setAttribute("message", SearchBookByYearServlet.YEARS_ARE_INCORECT);
+        } catch (NumberFormatException e) {
+            req.setAttribute("message", NOT_NUMBER);
         }
 
         req.getRequestDispatcher("/addBook.jsp").include(req, resp);

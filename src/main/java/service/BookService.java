@@ -1,6 +1,7 @@
 package service;
 
 import connector.DaoFactory;
+import dao.interfaces.BookDao;
 import dto.BookDto;
 import dto.StatisticsBookDto;
 import models.Book;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookService {
+    private BookDao bookDao = DaoFactory.bookDao();
 
     /**
      * Default constructor
@@ -23,7 +25,7 @@ public class BookService {
      * @return all books in database
      */
     public List<BookDto> findAllBooks() {
-        return DaoFactory.bookDao().findAll();
+        return bookDao.findAll();
     }
 
     /**
@@ -33,7 +35,7 @@ public class BookService {
      * @return all books with title
      */
     public List<BookDto> findAllBookByTitle(String title) throws Exception {
-        return DaoFactory.bookDao().findAllBookByTitle(title);
+        return bookDao.findAllBookByTitle(title);
     }
 
     /**
@@ -43,7 +45,7 @@ public class BookService {
      * @return true if it exist and false if doesn't
      */
     public boolean isBookAvailable(String nameOfBook) {
-        return DaoFactory.bookDao().isBookAvailable(nameOfBook);
+        return bookDao.isBookAvailable(nameOfBook);
     }
 
     /**
@@ -55,7 +57,7 @@ public class BookService {
      */
     public List<BookDto> findAllBooksBetweenDate(int firstYear, int lastYear) {
         if (lastYear >= firstYear) {
-            return DaoFactory.bookDao().findAllBooksBetweenDate(firstYear, lastYear);
+            return bookDao.findAllBooksBetweenDate(firstYear, lastYear);
         } else {
             return new ArrayList<>();
         }
@@ -68,7 +70,7 @@ public class BookService {
      * @return all books are written by the author
      */
     public List<BookDto> findAllBooksByAuthor(String nameOfAuthor) {
-        return DaoFactory.bookDao().findAllBooksByAuthor(nameOfAuthor);
+        return bookDao.findAllBooksByAuthor(nameOfAuthor);
     }
 
     /**
@@ -77,7 +79,7 @@ public class BookService {
      * @return the 10 worst books
      */
     public List<BookDto> getTenTheMostUnpopularBook() {
-        return DaoFactory.bookDao().getTenTheMostUnPopularBook().stream().limit(10).collect(Collectors.toList());
+        return bookDao.getTenTheMostUnPopularBook().stream().limit(10).collect(Collectors.toList());
     }
 
     /**
@@ -86,7 +88,7 @@ public class BookService {
      * @return the 10 best book
      */
     public List<BookDto> getTenTheMostPopularBook() {
-        return DaoFactory.bookDao().getTenTheMostPopularBook().stream().limit(10).collect(Collectors.toList());
+        return bookDao.getTenTheMostPopularBook().stream().limit(10).collect(Collectors.toList());
     }
 
     /**
@@ -95,7 +97,7 @@ public class BookService {
      * @param book the book you want to keep
      */
     public void save(Book book) throws Exception {
-        DaoFactory.bookDao().save(book);
+        bookDao.save(book);
     }
 
     /**
