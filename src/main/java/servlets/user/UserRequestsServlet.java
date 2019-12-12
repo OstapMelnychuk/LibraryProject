@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "/user-requests")
+@WebServlet("/user-requests")
 public class UserRequestsServlet extends HttpServlet {
   UserService userService;
 
@@ -22,12 +22,20 @@ public class UserRequestsServlet extends HttpServlet {
 
 
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    User user = (User) req.getSession().getAttribute("user");
+    User currentUser = (User) req.getSession().getAttribute("user");
+    User user = userService.getUserByName(req.getParameter("name"));
 
-    req.setAttribute("admin", user.getRoleId());
-
-    req.setAttribute("users", userService.getUserByName(req.getParameter("name")));
     req.setAttribute("name_show", true);
+    req.setAttribute("admin", currentUser.getRoleId());
+
+    //System.out.println(user);
+
+    req.setAttribute("users", user);
+    if(user != null) {
+      req.setAttribute("long", userService.getUserTimeFromStart(user.getId()));
+      req.setAttribute("book", userService.getUserBooksTaken(user.getId()));
+      req.setAttribute("book", userService.getUserBooksNotReturned(user.getId()));
+    }
 
     //getUserBooksTaken(Integer id)
     //getUserBooksNotReturned(Integer id)

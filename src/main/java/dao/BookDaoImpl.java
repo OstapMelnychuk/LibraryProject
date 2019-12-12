@@ -301,7 +301,8 @@ public class BookDaoImpl implements BookDao {
         "join copy on book.id = copy.book_id " +
         "join author on copy.author_id = author.id " +
         "join copy_book on book.id = copy_book.book_id " +
-        "Where book.title  like ?";
+        "Where book.title  like ? " +
+        "Group by book.id";
 
     List<Book> book = new ArrayList<>();
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

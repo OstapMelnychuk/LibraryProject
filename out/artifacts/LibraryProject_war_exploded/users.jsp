@@ -26,7 +26,7 @@
                         <form class="form-inline" method="post" action="/user-requests">
                             <div class="form-group mx-sm-3 mb-2">
                                 <label for="user name" class="sr-only">User's name</label>
-                                <input type="text" class="form-control" id="user name" name="nick_name"
+                                <input type="text" class="form-control" id="user name" name="user name"
                                        placeholder="name">
                             </div>
                             <button type="submit" class="btn btn-primary mb-2">Search</button>

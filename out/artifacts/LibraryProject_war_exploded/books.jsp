@@ -59,7 +59,7 @@
                                 <label for="title" class="sr-only">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="title">
                             </div>
-                            <button id="home" type="submit" class="btn btn-primary mb-2">Search</button>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
                         </form>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                                 <label for="book_title" class="sr-only">Title</label>
                                 <input type="text" class="form-control" id="book_title" name="book_title" placeholder="book_title">
                             </div>
-                            <button id="home" type="submit" class="btn btn-primary mb-2">Search</button>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
                         </form>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                 <c:forEach items="${books}" var="element">
                     <li class="list-group-item d-flex justify-content-between align-items-center li_button">
                         Title: ${element.title}
-                        <span class=Q"badge badge-primary badge-pill"
+                        <span class="badge badge-primary badge-pill"
                         <c:if test="${not element.isAvailable()}">style="background-color: #d31444"</c:if>
                         <c:if test="${element.isAvailable()}">style="background-color: #4adf75"</c:if>>
 

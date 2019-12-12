@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "/search-copies-title")
+@WebServlet("/search-copies-title")
 public class SearchCopiesByTitleServlet extends HttpServlet {
   BookService bookService;
 
@@ -28,7 +28,7 @@ public class SearchCopiesByTitleServlet extends HttpServlet {
     req.setAttribute("admin", user.getRoleId());
 
 
-    req.getRequestDispatcher("/books.jsp").include(req, resp);
+    req.getRequestDispatcher("books.jsp").include(req, resp);
   }
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
