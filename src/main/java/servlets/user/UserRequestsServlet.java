@@ -28,20 +28,16 @@ public class UserRequestsServlet extends HttpServlet {
     req.setAttribute("name_show", true);
     req.setAttribute("admin", currentUser.getRoleId());
 
-    //System.out.println(user);
-
-    req.setAttribute("users", user);
+    req.setAttribute("userh", user);
 
     System.out.println(user);
-    if(user != null) {
-      req.setAttribute("long", userService.getUserTimeFromStart(user.getId()));
-      req.setAttribute("book", userService.getUserBooksTaken(user.getId()));
-      req.setAttribute("book", userService.getUserBooksNotReturned(user.getId()));
-    }
 
-    //getUserBooksTaken(Integer id)
-    //getUserBooksNotReturned(Integer id)
-    //getUserTimeFromStart(Integer id)
+      req.setAttribute("long", userService.getUserTimeFromStart(user.getId()));
+      System.out.println(userService.getUserTimeFromStart(user.getId()));
+      req.setAttribute("book", userService.getUserBooksTaken(user.getId()));
+      System.out.println(userService.getUserBooksTaken(user.getId()));
+      req.setAttribute("book", userService.getUserBooksNotReturned(user.getId()));
+      System.out.println(userService.getUserBooksNotReturned(user.getId()));
 
     req.getRequestDispatcher("/users.jsp").include(req, resp);
   }

@@ -250,7 +250,7 @@ public class UserDao implements UserDaoInterface {
       String query = "SELECT * FROM Users WHERE nick_name like ? " +
           "limit 1";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
-      preparedStatement.setString(1, name);
+      preparedStatement.setString(1, "%" + name + "%");
       ResultSet resultSet = preparedStatement.executeQuery();
       UserMapper userMapper = new UserMapper();
       return userMapper.rowMapper(resultSet).get(0);
