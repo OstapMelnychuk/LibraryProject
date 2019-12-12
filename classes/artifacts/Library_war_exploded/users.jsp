@@ -115,29 +115,6 @@
                         </form>
                 </div>
             </div>
-
-            <%--            <div class="card">--%>
-            <%--                <div class="card-header" id="headingSix">--%>
-            <%--                    <h5 class="mb-0">--%>
-            <%--                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"--%>
-            <%--                                aria-expanded="false" aria-controls="collapseThree">--%>
-            <%--                            User Avarage Info--%>
-            <%--                        </button>--%>
-            <%--                    </h5>--%>
-            <%--                </div>--%>
-            <%--                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">--%>
-            <%--                    <div class="card-body">--%>
-            <%--                        <form class="form-inline" method="post" action="/average-statistics">--%>
-            <%--                            <div class="form-group mx-sm-3 mb-2 first-year">--%>
-            <%--                                <label for="author-name" class="sr-only">Title</label>--%>
-            <%--                                <input type="text" class="form-control" id="user-name" name="user-name"--%>
-            <%--                                       placeholder="user-name">--%>
-            <%--                            </div>--%>
-            <%--                            <button type="submit" class="btn btn-primary mb-2 year-button">Search</button>--%>
-            <%--                        </form>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
         </div>
     </div>
 
