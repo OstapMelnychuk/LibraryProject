@@ -31,6 +31,8 @@ public class UserRequestsServlet extends HttpServlet {
     //System.out.println(user);
 
     req.setAttribute("users", user);
+
+    System.out.println(user);
     if(user != null) {
       req.setAttribute("long", userService.getUserTimeFromStart(user.getId()));
       req.setAttribute("book", userService.getUserBooksTaken(user.getId()));

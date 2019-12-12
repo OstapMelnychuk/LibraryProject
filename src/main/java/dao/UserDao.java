@@ -247,14 +247,13 @@ public class UserDao implements UserDaoInterface {
     }
 
   public User getUserByName(String name) throws SQLException {
-      String query = "SELECT * FROM Users WHERE nick_name like ?";
+      String query = "SELECT * FROM Users WHERE nick_name like ? " +
+          "limit 1";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
-      preparedStatement.setString(1,"%" + name + "%");
+      preparedStatement.setString(1, name);
       ResultSet resultSet = preparedStatement.executeQuery();
-
-      User user = new UserMapper().rowMapper(resultSet).get(0);
-
-      return user;
+      UserMapper userMapper = new UserMapper();
+      return userMapper.rowMapper(resultSet).get(0);
     } catch (SQLException e) {
       return null;
     } catch (IndexOutOfBoundsException e) {

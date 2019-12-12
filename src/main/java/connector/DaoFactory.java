@@ -21,13 +21,12 @@ public final class DaoFactory {
           + "serverTimezone=UTC&"
           + "allowPublicKeyRetrieval=true";
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
     //bookDao().getTenTheMostPopularBook("asc");
 
+    System.out.println(userDao().getUserByName("Johnj"));
+
     //System.out.println(authorDao().isAuthorExist(new Author(1,"Anton", "Meme", "LOLs")));
-
-
-    System.out.println( bookDao().isBookExist(new Book(1, "It", "Chapter 2", "1999-12-11")));
 
   }
   /**

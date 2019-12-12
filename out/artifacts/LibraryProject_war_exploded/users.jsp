@@ -25,8 +25,8 @@
                     <div class="card-body">
                         <form class="form-inline" method="post" action="/user-requests">
                             <div class="form-group mx-sm-3 mb-2">
-                                <label for="user name" class="sr-only">User's name</label>
-                                <input type="text" class="form-control" id="user name" name="user name"
+                                <label for="name" class="sr-only">Name</label>
+                                <input type="text" class="form-control" id="name" name="name"
                                        placeholder="name">
                             </div>
                             <button type="submit" class="btn btn-primary mb-2">Search</button>
@@ -115,11 +115,14 @@
     <div class="for">
         <c:forEach items="${users}" var="element">
             <li class="list-group-item d-flex justify-content-between align-items-center li_button">
-                    ${element.nickName}
+                 Name:   ${element.nickName}
                 <span class="badge badge-primary badge-pill">${element.login}</span>
                 <div>
                         ${element.email} ${element.startDay}
                 </div>
+                        <div>
+                            Book: ${element.book.title} ${element.book.description} ${element.book.dateOfPublishment} ${element.book.author}
+                        </div>
             </li>
         </c:forEach>
     </div>
