@@ -4,7 +4,6 @@ import dao.interfaces.BookDao;
 import dao.interfaces.mappers.BookMapper;
 import dao.interfaces.mappers.BookRatingMapper;
 import dto.BookDto;
-//import dto.StatisticsBookDto;
 import models.Book;
 
 import java.sql.Connection;
@@ -12,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+
 
 public class BookDaoImpl implements BookDao {
     private final Connection connection;

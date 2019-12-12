@@ -34,8 +34,8 @@ public class UserService {
     DaoFactory.userDao().updateUserById(id, user);
   }
 
-  public long getUserTimeFromStart(Integer id) {
-    return DaoFactory.userDao().getUserTimeFromStart(id);
+  public long getUserTimeFromStart(String name) {
+    return DaoFactory.userDao().getUserTimeFromStart(name);
   }
 
   public List<BookDto> getUserBooksTaken(Integer id) {
@@ -62,5 +62,13 @@ public class UserService {
 
   public void logIn(String login, String password) {
     DaoFactory.userDao().logIn(login, password);
+  }
+
+  public double getAverageUserAge(){
+    return DaoFactory.userDao().getAverageUserAge();
+  }
+
+  public int getUserHits(String userName){
+    return DaoFactory.userDao().getUserHits(userName);
   }
 }

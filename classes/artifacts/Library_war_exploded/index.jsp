@@ -8,7 +8,7 @@
 <div id="main_div">
     <jsp:include page="navbar.jsp"/>
 
-    <div><a href="registration.jsp">Sign up</a></div>
+
 
     <div id="login_body_div" class="login">
         <div>
@@ -24,6 +24,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Log in</button>
             </form>
+            <div><a href="registration.jsp" style="text-align: center">Sign up</a></div>
         </div>
     </div>
 </div>

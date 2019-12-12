@@ -14,12 +14,24 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class UserDao implements UserDaoInterface {
+  /**
+   * Field for holding connection with database
+   */
   private Connection connection;
 
+  /**
+   * Constructor for initializing connection with database
+   * @param connection with database
+   */
   public UserDao(Connection connection) {
     this.connection = connection;
   }
 
+  /**
+   * Method that returns all users with specific id
+   * @param id of user
+   * @return List of users with this id or empty List if there are none
+   */
   @Override
   public List<User> readUserById(Integer id) {
     try {
@@ -90,19 +102,21 @@ public class UserDao implements UserDaoInterface {
       ResultSet resultSet = preparedStatement.executeQuery();
       if (!resultSet.first()) {
         query = "INSERT INTO USERS"
-          + "(id, nick_name, login, user_password, role_id, email, age, start_date) "
-          + "VALUE (?, ?, ?, ?, ?, ?, ?, ?)";
+          + "(nick_name, login, user_password, role_id, email, age, start_date) "
+          + "VALUE (?, ?, ?, ?, ?, ?, ?)";
         preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setInt(1, user.getId());
-        preparedStatement.setString(2, user.getNickName());
-        preparedStatement.setString(3, user.getLogin());
-        preparedStatement.setString(4, user.getPassword());
-        preparedStatement.setInt(5, user.getRoleId());
-        preparedStatement.setString(6, user.getEmail());
-        preparedStatement.setInt(7, user.getAge());
-        preparedStatement.setDate(8, Date.valueOf(LocalDate.now()));
+        preparedStatement.setString(1, user.getNickName());
+        preparedStatement.setString(2, user.getLogin());
+        preparedStatement.setString(3, user.getPassword());
+        preparedStatement.setInt(4, user.getRoleId());
+        preparedStatement.setString(5, user.getEmail());
+        preparedStatement.setInt(6, user.getAge());
+        preparedStatement.setDate(7, Date.valueOf(LocalDate.now()));
         preparedStatement.executeUpdate();
         return user.getId();
+      }
+      else {
+        throw new SQLException("There is such User");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -137,15 +151,15 @@ public class UserDao implements UserDaoInterface {
     }
   }
 
-  public long getUserTimeFromStart(Integer id) {
+  public long getUserTimeFromStart(String name) {
     try {
       long a = 0;
       long diff = 0;
       TimeUnit timeUnit = null;
       String query = "SELECT start_date \n" +
-        "FROM USERS Where id = ?;";
+        "FROM USERS Where nick_name = ?;";
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setInt(1, id);
+      preparedStatement.setString(1, name);
       ResultSet resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Date date = resultSet.getDate(1);
@@ -260,6 +274,52 @@ public class UserDao implements UserDaoInterface {
     }
     return 0;
 
+  }
+
+  public int getUserHits(String userName) {
+    String query;
+    int id = 0;
+    try {
+      query = "Select id From Users Where nick_name = ?";
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setString(1, userName);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      resultSet.next();
+      id = resultSet.getInt(1);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    try {
+      query = "Select count(id) From journal\n" +
+        "where journal.user_id = ?";
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setInt(1, id);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        return resultSet.getInt(1);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
+  public double getAverageUserAge() {
+    double averageAge = 0;
+    int index = 0;
+    try {
+      String query = "Select age From Users";
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        averageAge += resultSet.getInt(1);
+        index++;
+      }
+      return averageAge / index;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return averageAge;
   }
 
   public User logIn(String login, String password) {

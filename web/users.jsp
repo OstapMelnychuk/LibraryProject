@@ -103,15 +103,16 @@
 
             <div class="card">
                 <div class="card-header" id="headingFive">
-                    <h5 class="mb-0">
-                        <form class="form-inline" method="post" action="/top">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
-                                    aria-expanded="false" aria-controls="collapseFive">
-                                Users average statistic
+                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                    aria-expanded="false" aria-controls="collapseThree">
+                                Average User statistic
                             </button>
+                        <form class="form-inline" method="post" action="/average-statistics">
+                            <label for="user-name" class="sr-only">Title</label>
+                            <input type="text" class="form-control" id="user-name" name="user-name"
+                                   placeholder="user-name">
+                                <button type="submit" class="btn btn-primary mb-2 year-button">Search</button>
                         </form>
-
-                    </h5>
                 </div>
             </div>
         </div>
@@ -128,13 +129,31 @@
                 </c:forEach>
             </c:when>
             <c:when test="${age > 0}">
-                <li class="list-group-item d-flex justify-content-between align-items-center li_button"> ${age} </li>
+                <c:if test="${hits > 0}">
+                    <li class="list-group-item d-flex justify-content-between align-items-center li_button">The user used library for ${hits} times </li>
+                </c:if>
+                <c:if test="${days > 0}">
+                    <li class="list-group-item d-flex justify-content-between align-items-center li_button">The user is in library for ${days} days </li>
+                </c:if>
+                <li class="list-group-item d-flex justify-content-between align-items-center li_button"> Average age is ${age} </li>
             </c:when>
             <c:when test="${age <= 0}">
-                <h3>Sorry we don`t have statistic for such book</h3>
+                <h3>Sorry we don`t have statistic for name</h3>
             </c:when>
             <c:when test="${empty authors && authors.isEmpty()}">
                 <h3>Sorry there are no such users</h3>
+            </c:when>
+            <c:when test="${days <= 0}">
+                <h3>Sorry we don`t have statistic for name</h3>
+            </c:when>
+            <c:when test="${days > 0}">
+                <li class="list-group-item d-flex justify-content-between align-items-center li_button">The user is in library for ${days} days </li>
+            </c:when>
+            <c:when test="${hits <= 0}">
+                <h3>Sorry this user didn`t use the library yet</h3>
+            </c:when>
+            <c:when test="${hits > 0}">
+                <li class="list-group-item d-flex justify-content-between align-items-center li_button">The user used library for ${hits} times </li>
             </c:when>
         </c:choose>
     </div>
