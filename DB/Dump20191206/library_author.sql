@@ -16,30 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `copy_book`
+-- Table structure for table `author`
 --
 
-DROP TABLE IF EXISTS `copy_book`;
+DROP TABLE IF EXISTS `author`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `copy_book` (
+CREATE TABLE `author` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `book_id` int(11) DEFAULT NULL,
-  `is_availible` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tb_copy_book` (`book_id`),
-  CONSTRAINT `tb_copy_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `author_name` varchar(30) DEFAULT NULL,
+  `author_secondname` varchar(30) DEFAULT NULL,
+  `author_surname` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `copy_book`
+-- Dumping data for table `author`
 --
 
-LOCK TABLES `copy_book` WRITE;
-/*!40000 ALTER TABLE `copy_book` DISABLE KEYS */;
-INSERT INTO `copy_book` VALUES (1,1,NULL);
-/*!40000 ALTER TABLE `copy_book` ENABLE KEYS */;
+LOCK TABLES `author` WRITE;
+/*!40000 ALTER TABLE `author` DISABLE KEYS */;
+INSERT INTO `author` VALUES (1,'Anton','Meme','LOL'),(2,'Vasia','Malion','Pupkin');
+/*!40000 ALTER TABLE `author` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-04 19:24:23
+-- Dump completed on 2019-12-06  0:04:11

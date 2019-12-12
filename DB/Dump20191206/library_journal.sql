@@ -16,29 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `author`
+-- Table structure for table `journal`
 --
 
-DROP TABLE IF EXISTS `author`;
+DROP TABLE IF EXISTS `journal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `author` (
+CREATE TABLE `journal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author_name` varchar(30) DEFAULT NULL,
-  `author_secondname` varchar(30) DEFAULT NULL,
-  `author_surname` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `user_id` int(11) DEFAULT NULL,
+  `date_of_output` date DEFAULT NULL,
+  `date_of_input` date DEFAULT NULL,
+  `book_exemplar_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tb_user` (`user_id`),
+<<<<<<< HEAD:DB/Dump20191204/library_journal.sql
+  KEY `tb_book_copy_t` (`book_id`),
+  CONSTRAINT `tb_book_copy_t` FOREIGN KEY (`book_id`) REFERENCES `copy_book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+=======
+  KEY `book_exemplar_id_idx` (`book_exemplar_id`),
+  CONSTRAINT `book_exemplar_id` FOREIGN KEY (`book_exemplar_id`) REFERENCES `copy_book` (`id`),
+>>>>>>> c5ed0e17343858505aca90141d330fc33b722e5f:DB/Dump20191206/library_journal.sql
+  CONSTRAINT `tb_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `author`
+-- Dumping data for table `journal`
 --
 
-LOCK TABLES `author` WRITE;
-/*!40000 ALTER TABLE `author` DISABLE KEYS */;
-INSERT INTO `author` VALUES (1,'Anton','Meme','LOL'),(2,'Vasia','Malion','Pupkin');
-/*!40000 ALTER TABLE `author` ENABLE KEYS */;
+LOCK TABLES `journal` WRITE;
+/*!40000 ALTER TABLE `journal` DISABLE KEYS */;
+INSERT INTO `journal` VALUES (1,1,'1999-10-10','1999-11-11',NULL),(2,1,'1999-10-10',NULL,NULL);
+/*!40000 ALTER TABLE `journal` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-04 19:24:23
+-- Dump completed on 2019-12-06  0:04:11

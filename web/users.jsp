@@ -26,7 +26,7 @@
                         <form class="form-inline" method="post" action="/search-author">
                             <div class="form-group mx-sm-3 mb-2">
                                 <label for="authors name" class="sr-only">Author's name</label>
-                                <input type="text" class="form-control" id="authors name" name="author"
+                                <input type="text" maxlength="30" class="form-control" id="authors name" name="author"
                                        placeholder="name">
                             </div>
                             <button type="submit" class="btn btn-primary mb-2">Search</button>
