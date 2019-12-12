@@ -198,12 +198,14 @@ public class BookDaoImpl implements BookDao {
      */
     @Override
     public void save(Book book) throws Exception {
+        AuthorService authorService = new AuthorService();
+
         String query = "INSERT INTO book "
                 + "(title, book_description, date_of_publisment, count)"
                 + "VALUE (?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            System.out.println(isBookExist(book));
+
             if (isBookExist(book)) {
                 update(book, findCountOfBook(book));
             } else {
@@ -212,15 +214,13 @@ public class BookDaoImpl implements BookDao {
                 preparedStatement.setString(3, book.getDateOfPublishment());
                 preparedStatement.setInt(4, book.getCount());
                 preparedStatement.executeUpdate();
+            }
 
-                AuthorService authorService = new AuthorService();
-
-                if (authorService.isAuthorExist(book)) {
-                    connectBookWithAuthor(book);
-                } else {
-                    authorService.create(book.getAuthor());
-                    connectBookWithAuthor(book);
-                }
+            if (authorService.isAuthorExist(book)) {
+                connectBookWithAuthor(book);
+            } else {
+                authorService.create(book.getAuthor());
+                connectBookWithAuthor(book);
             }
 
             addAllExemplars(book.getCount(), book);
@@ -235,7 +235,7 @@ public class BookDaoImpl implements BookDao {
      * @param book book you want to update
      */
     public void update(Book book) {
-        System.out.println("This method is not applicable");
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -267,7 +267,7 @@ public class BookDaoImpl implements BookDao {
      */
     @Override
     public void delete(Book book) {
-        System.out.println("This method is not applicable");
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -277,16 +277,13 @@ public class BookDaoImpl implements BookDao {
      * @return true if book exists and false if dean't
      */
     public boolean isBookExist(Book book) {
-        String query = "Select * from book join copy on copy.book_id = book.id " +
-                "join author on copy.author_id = author.id " +
-                "where title = ? AND book_description = ? AND date_of_publisment = ? AND author_name = ? AND author_secondname = ?";
+        String query = "Select * from book " +
+                "where title = ? AND book_description = ? AND date_of_publisment = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, book.getTitle());
             preparedStatement.setString(2, book.getDescription());
             preparedStatement.setString(3, book.getDateOfPublishment());
-            preparedStatement.setString(4, book.getAuthor().getFirstname());
-            preparedStatement.setString(5, book.getAuthor().getSecondname());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -343,8 +340,6 @@ public class BookDaoImpl implements BookDao {
         try (PreparedStatement statement = connection.prepareStatement(queryAddAuthor)) {
             book.setId(findIdBookByTitle(book));
 
-            System.out.println(book.getAuthor().getId() + " " + book.getId());
-
             statement.setInt(1, book.getAuthor().getId());
             statement.setInt(2, book.getId());
 
@@ -369,8 +364,6 @@ public class BookDaoImpl implements BookDao {
             preparedStatement.setString(1, book.getTitle());
             preparedStatement.setString(2, book.getDescription());
             preparedStatement.setString(3, book.getDateOfPublishment());
-
-            System.out.println(book.getTitle() + " " + book.getDescription() + " " + book.getDateOfPublishment());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
